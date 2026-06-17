@@ -9,47 +9,90 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --cyan:#17d4e8;
-  --cyan-dim:rgba(23,212,232,0.12);
-  --cyan-border:rgba(23,212,232,0.3);
-  --bg:#0e1015;
-  --surface:#161a22;
-  --surface2:#1c2130;
-  --border:rgba(255,255,255,0.08);
-  --text:#dde2ee;
-  --muted:#6b7590;
-  --muted2:#3d4560;
-  --red:rgba(255,60,60,0.9);
-  --red-dim:rgba(255,60,60,0.1);
-  --red-border:rgba(255,60,60,0.3);
+  --cyan:#17d4e8;--cyan-dim:rgba(23,212,232,0.1);--cyan-border:rgba(23,212,232,0.28);
+  --bg:#0e1015;--surface:#161a22;--surface2:#1c2130;--border:rgba(255,255,255,0.08);
+  --text:#dde2ee;--muted:#6b7590;--muted2:#3d4560;
+  --red:rgba(255,60,60,0.9);--red-dim:rgba(255,60,60,0.1);--red-border:rgba(255,60,60,0.3);
+  --green:#22c97a;--green-dim:rgba(34,201,122,0.1);
 }
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;min-height:100vh}
 
 /* NAV */
-nav{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);padding:0 24px;height:52px;position:sticky;top:0;background:rgba(14,16,21,0.97);backdrop-filter:blur(10px);z-index:100}
+nav{display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 24px;height:52px;position:sticky;top:0;background:rgba(14,16,21,0.97);backdrop-filter:blur(10px);z-index:200}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:8px}
-.nav-logo img{height:24px;width:auto}
+.nav-logo img{height:24px}
 .nav-wordmark{font-size:14px;font-weight:700;color:var(--cyan);letter-spacing:0.06em}
 .nav-sep{width:1px;height:20px;background:var(--border);margin:0 8px}
-.nav-links{display:flex;gap:0}
-.nav-link{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:0 14px;height:52px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:color 0.15s;letter-spacing:0.01em}
+.nav-links{display:flex}
+.nav-link{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:0 14px;height:52px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:color 0.15s}
 .nav-link:hover{color:var(--text)}
 .nav-link.active{color:var(--cyan);border-bottom-color:var(--cyan)}
-.nav-tournament{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--text);font-size:13px;font-weight:600;cursor:pointer;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface)}
-.nav-tournament img{height:18px}
-.nav-tournament svg{width:14px;height:14px;color:var(--muted)}
+.nav-tournament{display:flex;align-items:center;gap:6px;margin-left:auto;color:var(--text);font-size:12px;font-weight:600;padding:6px 10px;border-radius:6px;border:1px solid var(--border);background:var(--surface);cursor:pointer}
+.nav-tournament img{height:16px}
 
-/* PAGE HEADER */
-.page-header{padding:24px 24px 0;display:flex;align-items:baseline;justify-content:space-between}
-.page-title{font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.02em}
+/* MATCHUP TOOL */
+.matchup-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.matchup-title{font-size:11px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap}
+.autocomplete-wrap{position:relative;flex:1;min-width:160px;max-width:240px}
+.autocomplete-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none}
+.autocomplete-input:focus{border-color:var(--cyan-border)}
+.autocomplete-input::placeholder{color:var(--muted2)}
+.dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--surface2);border:1px solid var(--border);border-radius:6px;z-index:300;max-height:200px;overflow-y:auto;display:none}
+.dropdown.open{display:block}
+.dd-item{padding:8px 12px;font-size:12px;cursor:pointer;color:var(--text);display:flex;align-items:center;gap:8px}
+.dd-item:hover{background:rgba(255,255,255,0.05)}
+.dd-abbr{font-size:9px;font-weight:700;color:var(--cyan);background:var(--cyan-dim);border:1px solid var(--cyan-border);border-radius:3px;padding:1px 4px;min-width:28px;text-align:center}
+.vs-label{font-size:12px;color:var(--muted);font-weight:600}
+.matchup-btn{background:var(--cyan-dim);border:1px solid var(--cyan-border);color:var(--cyan);padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;white-space:nowrap}
+.matchup-btn:hover{background:rgba(23,212,232,0.18)}
+.clear-btn{background:none;border:none;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;padding:7px 8px}
+.clear-btn:hover{color:var(--text)}
+
+/* MATCHUP RESULT */
+.matchup-result{background:var(--surface2);border-bottom:1px solid var(--border);padding:16px 24px;display:none}
+.matchup-result.open{display:block}
+.mr-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.mr-team{font-size:15px;font-weight:700;color:#fff}
+.mr-score{font-size:22px;font-weight:800;padding:4px 14px;background:var(--bg);border-radius:8px;letter-spacing:0.04em}
+.mr-score .w{color:var(--green)}
+.mr-score .l{color:var(--muted)}
+.mr-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;font-weight:600}
+.match-history{display:flex;flex-direction:column;gap:6px}
+.mh-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg);border-radius:6px;border:1px solid var(--border);font-size:12px}
+.mh-stage{color:var(--muted);min-width:110px;font-size:11px}
+.mh-teams{flex:1;color:var(--text)}
+.mh-score{font-weight:700;min-width:40px;text-align:center}
+.mh-score.win{color:var(--green)}
+.mh-score.loss{color:var(--red)}
+.mh-winner{font-size:11px;color:var(--muted);min-width:120px;text-align:right}
+.never-played{font-size:13px;color:var(--muted);padding:8px 0}
+
+/* COMPARE PANEL */
+.compare-panel{background:var(--surface2);border-bottom:1px solid var(--border);padding:16px 24px;display:none}
+.compare-panel.open{display:block}
+.cp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.cp-title{font-size:11px;font-weight:600;color:var(--cyan);text-transform:uppercase;letter-spacing:0.08em}
+.cp-close{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;line-height:1;font-family:'Inter',sans-serif}
+.cp-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.cp-team-name{font-size:13px;font-weight:700;color:#fff;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.cp-player{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:12px}
+.cp-player-name{color:var(--text)}
+.cp-player-name.cap{color:var(--cyan)}
+.cp-kd{font-size:11px;color:var(--muted);font-style:italic}
+.cp-note{font-size:11px;color:var(--muted2);margin-top:10px;font-style:italic}
 
 /* TOOLBAR */
-.toolbar{padding:16px 24px;display:flex;align-items:center;gap:10px}
-.search-wrap{position:relative;flex:1;max-width:340px}
-.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);width:14px;height:14px;pointer-events:none}
-#search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:7px 10px 7px 32px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none}
+.toolbar{padding:14px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.search-wrap{position:relative;max-width:320px;flex:1}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted);width:13px;height:13px;pointer-events:none}
+#search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:7px 10px 7px 30px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none}
 #search::placeholder{color:var(--muted2)}
 #search:focus{border-color:var(--cyan-border)}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s}
+.chip:hover{border-color:rgba(255,255,255,0.2);color:var(--text)}
+.chip.active{background:var(--cyan-dim);border-color:var(--cyan-border);color:var(--cyan)}
+.chip.red-chip.active{background:var(--red-dim);border-color:var(--red-border);color:var(--red)}
 .sort-label{font-size:12px;color:var(--muted);white-space:nowrap}
 .sort-select{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:7px 10px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none;cursor:pointer}
 .sort-select:focus{border-color:var(--cyan-border)}
@@ -60,39 +103,40 @@ nav{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:10px;padding:0 24px 48px;align-items:start}
 
 /* CARD */
-.team-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:visible;cursor:pointer;transition:border-color 0.15s}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color 0.15s}
 .team-card:hover{border-color:rgba(255,255,255,0.15)}
 .team-card.shitlist-card{border-color:var(--red-border)}
-.team-card.shitlist-card:hover{border-color:var(--red)}
-
-/* CARD HEADER */
 .card-header{padding:12px 14px;display:flex;align-items:center;gap:10px}
 .team-abbr{width:34px;height:34px;border-radius:6px;background:var(--cyan-dim);border:1px solid var(--cyan-border);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:0.04em;flex-shrink:0}
 .team-abbr.red{background:var(--red-dim);border-color:var(--red-border);color:var(--red)}
 .card-title-wrap{flex:1;min-width:0}
 .team-name{font-size:14px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.shitlist-tag{font-size:9px;font-weight:600;background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);border-radius:3px;padding:1px 5px;letter-spacing:0.05em;text-transform:uppercase;margin-left:5px;vertical-align:middle}
+.card-badges{display:flex;align-items:center;gap:5px;margin-top:3px}
+.group-badge{font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid var(--border)}
+.record-badge{font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px}
+.record-badge.good{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,201,122,0.25)}
+.record-badge.bad{background:var(--red-dim);color:var(--red);border:1px solid var(--red-border)}
+.record-badge.ok{background:rgba(255,200,60,0.1);color:#ffc83c;border:1px solid rgba(255,200,60,0.25)}
+.shitlist-tag{font-size:9px;font-weight:600;background:var(--red-dim);color:var(--red);border:1px solid var(--red-border);border-radius:3px;padding:1px 5px;letter-spacing:0.05em;text-transform:uppercase}
 .seed-num{font-size:12px;color:var(--muted);flex-shrink:0}
+.card-actions{display:flex;gap:4px;align-items:center}
+.compare-btn{font-size:10px;padding:3px 7px;border-radius:4px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif;white-space:nowrap}
+.compare-btn:hover{border-color:var(--cyan-border);color:var(--cyan)}
+.compare-btn.selected{border-color:var(--cyan-border);color:var(--cyan);background:var(--cyan-dim)}
 .collapse-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:2px;display:flex;align-items:center;border-radius:3px}
 .collapse-btn svg{width:14px;height:14px;transition:transform 0.2s}
 .team-card.collapsed .collapse-btn svg{transform:rotate(-90deg)}
-
-/* CARD BODY */
 .card-body{padding:0 14px 12px;border-top:1px solid var(--border)}
+.team-card.collapsed .card-body{display:none}
 .card-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;margin-top:10px}
 .col-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .player{font-size:11px;color:var(--text);padding:2px 0;line-height:1.4}
 .player.captain{color:var(--cyan)}
 .player.sub{color:var(--muted)}
-.player.emerg{color:var(--muted2)}
 .card-divider{height:1px;background:var(--border);margin:10px 0}
 .staff-row{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
-.staff-item{}
-.staff-item .col-label{margin-bottom:3px}
 .staff-val{font-size:11px;color:var(--muted)}
 .staff-val.none{color:var(--muted2);font-style:italic}
-.team-card.collapsed .card-body{display:none}
-
 .no-results{grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:14px}
 footer{border-top:1px solid var(--border);padding:16px 24px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between}
 footer a{color:var(--muted);text-decoration:none}
@@ -115,38 +159,72 @@ footer a{color:var(--muted);text-decoration:none}
   <div class="nav-tournament">
     <img src="funhaver-mark-cyan.png" alt="">
     WILD//WEST Stage 2 - Qualifier 6
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:13px;height:13px;color:var(--muted)"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
 </nav>
 
-<div class="page-header">
-  <div class="page-title">52 Teams</div>
+<!-- MATCHUP FINDER -->
+<div class="matchup-bar">
+  <span class="matchup-title">⚔ Matchup Finder</span>
+  <div class="autocomplete-wrap" id="wrap1">
+    <input class="autocomplete-input" id="team1" placeholder="Team 1..." autocomplete="off" oninput="acInput(1)" onfocus="acFocus(1)" onblur="acBlur(1)">
+    <div class="dropdown" id="dd1"></div>
+  </div>
+  <span class="vs-label">vs</span>
+  <div class="autocomplete-wrap" id="wrap2">
+    <input class="autocomplete-input" id="team2" placeholder="Team 2..." autocomplete="off" oninput="acInput(2)" onfocus="acFocus(2)" onblur="acBlur(2)">
+    <div class="dropdown" id="dd2"></div>
+  </div>
+  <button class="matchup-btn" onclick="findMatchup()">Look Up</button>
+  <button class="clear-btn" onclick="clearMatchup()">Clear</button>
 </div>
 
+<!-- MATCHUP RESULT -->
+<div class="matchup-result" id="matchup-result"></div>
+
+<!-- COMPARE PANEL -->
+<div class="compare-panel" id="compare-panel">
+  <div class="cp-header">
+    <span class="cp-title">Player Comparison</span>
+    <button class="cp-close" onclick="clearCompare()">×</button>
+  </div>
+  <div id="compare-content"></div>
+</div>
+
+<!-- TOOLBAR -->
+<div style="padding:16px 24px 0;display:flex;align-items:baseline;justify-content:space-between">
+  <div style="font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.02em">52 Teams</div>
+</div>
 <div class="toolbar">
   <div class="search-wrap">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="search" placeholder="Search teams, players, coaches, subs...">
+    <input type="text" id="search" placeholder="Search teams, players, coaches...">
   </div>
-  <span class="sort-label">Sort By:</span>
+  <div class="filter-chips">
+    <button class="chip" id="chip-coached" onclick="toggleChip('coached')">Has Coach</button>
+    <button class="chip" id="chip-uncoached" onclick="toggleChip('uncoached')">No Coach</button>
+    <button class="chip red-chip" id="chip-shitlist" onclick="toggleChip('shitlist')">Shitlist</button>
+    <button class="chip" id="chip-playoffs" onclick="toggleChip('playoffs')">Made Playoffs</button>
+  </div>
+  <span class="sort-label" style="margin-left:auto">Sort:</span>
   <select class="sort-select" id="sort">
-    <option value="alpha">Team Name A–Z</option>
-    <option value="alpha-desc">Team Name Z–A</option>
-    <option value="seed">Seed (Low → High)</option>
-    <option value="seed-desc">Seed (High → Low)</option>
+    <option value="alpha">Name A–Z</option>
+    <option value="alpha-desc">Name Z–A</option>
+    <option value="seed">Seed ↑</option>
+    <option value="seed-desc">Seed ↓</option>
+    <option value="record">Record ↑</option>
   </select>
   <div class="team-count">Showing <span id="count">52</span> teams</div>
 </div>
 
 <div class="grid" id="grid"></div>
-
 <footer>
-  <span>© 2026 FunhaverGG LLC · <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></span>
+  <span>© 2026 FunhaverGG LLC · <a href="#">Privacy</a> · <a href="#">Terms</a></span>
   <span>Not endorsed by Riot Games</span>
 </footer>
 
 <script>
-const seeds = {
+const seeds={
   '4kt':23,'ADHD AIMERS':41,'Alliance Guardians':20,'Anywhere But Here':27,'apples':1,
   'Ares2 Legion':37,'barbeque chicken':10,'Berzerkers':26,'Blue Otter':7,'Celestial Esports':36,
   'Clovers':22,'Country Roads':16,'Curry and Friends':43,'Division One':4,'Dynamo':8,
@@ -160,7 +238,70 @@ const seeds = {
   'yung thug':28,'Zodiac Esports':38
 };
 
-const teams = [
+// group records: [wins, losses, group, finish]
+const groupData={
+  'apples':[3,0,'A','1st'],'Berzerkers':[2,1,'A','2nd'],'Lean is Law':[0,2,'A',null],'Anywhere But Here':[1,2,'A',null],
+  'Evictix':[3,0,'B','1st'],'WhyWeSleeping':[2,1,'B','2nd'],'yung thug':[1,2,'B',null],'Seraph':[0,2,'B',null],
+  'Jackpot':[3,0,'C','1st'],'Eternal Focus Night':[2,1,'C','2nd'],'tadpoles':[1,2,'C',null],'Oklahoma':[0,2,'C',null],
+  '4kt':[3,0,'D','1st'],'Division One':[2,1,'D','2nd'],'Koala university':[0,2,'D',null],'Miracle Makers':[1,2,'D',null],
+  'really good players':[3,0,'E','1st'],'Clovers':[2,1,'E','2nd'],'HEAVY hittas':[1,2,'E',null],'mute up':[0,2,'E',null],
+  'Nightblood Gaming':[3,0,'F','1st'],'QoR Piggies':[2,1,'F','2nd'],'tangerines':[1,2,'F',null],'Volitant':[0,2,'F',null],
+  'Blue Otter':[3,0,'G','1st'],'Alliance Guardians':[2,1,'G','2nd'],'ROSO':[0,2,'G',null],'Pug Warriors':[1,2,'G',null],
+  'Dynamo':[3,0,'H','1st'],'Tempers':[2,1,'H','2nd'],'Flying Hippos':[1,2,'H',null],'ROSO GC':[0,2,'H',null],
+  'Evil Geniuses Academy':[3,0,'I','1st'],'Eternal Focus':[2,1,'I','2nd'],'HEHEHEHA':[1,2,'I',null],'NOT winning':[0,2,'I',null],
+  'barbeque chicken':[3,0,'J','1st'],'Curry and Friends':[2,1,'J','2nd'],'Celestial Esports':[1,2,'J',null],'The Ellars':[0,2,'J',null],
+  'inters':[3,0,'K','1st'],'Country Roads':[2,1,'K','2nd'],'Ares2 Legion':[1,2,'K',null],'GREY':[0,2,'K',null],
+  'ROSE':[3,0,'L','1st'],'Zodiac Esports':[2,1,'L','2nd'],'Xora Esports':[1,2,'L',null],'ADHD AIMERS':[0,2,'L',null],
+  'NXG':[3,0,'M','1st'],'focused on gaming':[2,1,'M','2nd'],'Omnipotent Gaming':[1,2,'M',null],'Ice Fishers':[0,2,'M',null]
+};
+
+// Full match history: [stage, teamA, scoreA, scoreB, teamB]
+const matchHistory=[
+  // Groups handled via groupData — playoff matches below
+  ['RO32','apples',2,0,'GREY'],['RO32','Eternal Focus Night',2,0,'WhyWeSleeping'],
+  ['RO32','Evil Geniuses Academy',2,0,'Curry and Friends'],['RO32','Dynamo',2,0,'Country Roads'],
+  ['RO32','really good players',2,0,'Omnipotent Gaming'],['RO32','ROSE',2,1,'Alliance Guardians'],
+  ['RO32','NXG',2,0,'QoR Piggies'],['RO32','4kt',2,0,'yung thug'],
+  ['RO32','Jackpot',2,0,'Xora Esports'],['RO32','Division One',2,0,'Tempers'],
+  ['RO32','inters',2,0,'Eternal Focus'],['RO32','Nightblood Gaming',2,1,'Miracle Makers'],
+  ['RO32','Blue Otter',2,1,'focused on gaming'],['RO32','barbeque chicken',2,0,'Zodiac Esports'],
+  ['RO32','Clovers',2,0,'Berzerkers'],['RO32','Evictix',2,0,'tadpoles'],
+  ['RO16','apples',2,0,'Eternal Focus Night'],['RO16','Evil Geniuses Academy',2,0,'Dynamo'],
+  ['RO16','really good players',2,0,'ROSE'],['RO16','4kt',2,1,'NXG'],
+  ['RO16','Division One',2,0,'Jackpot'],['RO16','Nightblood Gaming',2,0,'inters'],
+  ['RO16','barbeque chicken',2,0,'Blue Otter'],['RO16','Evictix',2,0,'Clovers'],
+  ['QF','Evil Geniuses Academy',2,1,'apples'],['QF','4kt',2,1,'really good players'],
+  ['QF','Nightblood Gaming',2,1,'Division One'],['QF','barbeque chicken',2,1,'Evictix'],
+  ['SF','Evil Geniuses Academy',2,0,'4kt'],['SF','Nightblood Gaming',2,1,'barbeque chicken'],
+  ['GF','Nightblood Gaming',2,1,'Evil Geniuses Academy']
+];
+
+// check if two teams played in same group
+function groupMatch(a,b){
+  const ga=groupData[a],gb=groupData[b];
+  if(!ga||!gb||ga[2]!==gb[2]) return null;
+  return ga[2];
+}
+
+function getH2H(t1,t2){
+  const results=[];
+  // check if in same group
+  const grp=groupMatch(t1,t2);
+  if(grp) results.push({stage:`Group ${grp}`,winner:groupData[t1][0]>groupData[t2][0]?t1:t2,note:'Group play (series result)',scoreA:null,scoreB:null,a:t1,b:t2});
+  // check playoff matches
+  matchHistory.forEach(m=>{
+    const[stage,a,sa,sb,b]=m;
+    if((a===t1&&b===t2)||(a===t2&&b===t1)){
+      const winner=sa>sb?a:b;
+      results.push({stage,a,b,scoreA:sa,scoreB:sb,winner});
+    }
+  });
+  return results;
+}
+
+const playoffTeams=new Set(['apples','Eternal Focus Night','Evil Geniuses Academy','Dynamo','really good players','ROSE','NXG','4kt','Jackpot','Division One','inters','Nightblood Gaming','Blue Otter','barbeque chicken','Clovers','Evictix','Evil Geniuses Academy','4kt','Nightblood Gaming','barbeque chicken','Evil Geniuses Academy','4kt','Nightblood Gaming','barbeque chicken']);
+
+const teams=[
   {abbr:'4K',name:'4kt',captain:'dmo#derek',roster:['snow#2574','dmo#derek','lIIlIlIIllIllIII#99999','johnny cox#6080','crosbycs#fps'],subs:['River#347'],emergency:'sen oasis#vvv',coach:null,acoach:null},
   {abbr:'AA',name:'ADHD AIMERS',captain:'STOP THE VOICES#NOOOO',roster:['STOP THE VOICES#NOOOO','zzz#asp','alii#bae','Zydro#6789','Wast3d#esper'],subs:['nemophila#nami','GEESE SUPER FAN#nalyD'],emergency:null,coach:null,acoach:null},
   {abbr:'AXG',name:'Alliance Guardians',captain:'RYKER#88777',roster:['RYKER#88777','Wildfire#wfxl','guimond#gui','twitch yearn#zzz','TMONEY#XITER'],subs:['D1 끝판왕#Utah'],emergency:null,coach:null,acoach:null},
@@ -215,77 +356,202 @@ const teams = [
   {abbr:'ZOD',name:'Zodiac Esports',captain:'Knock27#2727',roster:['asura#PHL','greg#craig','Knock27#2727','Frostesz#Joey','Mob#oobie'],subs:['ICE AGE MONSTER#SID'],emergency:null,coach:'Gjorgji#bob',acoach:null}
 ];
 
-let filtered = [...teams];
+const teamNames=teams.map(t=>t.name);
+let sel1=null,sel2=null,compareTeams=[],activeChips=new Set(),filtered=[...teams];
 
-function renderGrid() {
-  document.getElementById('count').textContent = filtered.length;
-  const grid = document.getElementById('grid');
-  if (!filtered.length) { grid.innerHTML = '<div class="no-results">No teams found</div>'; return; }
-  grid.innerHTML = filtered.map((t,i) => {
-    const sl = t.shitlist;
-    const s = seeds[t.name] ? `(${seeds[t.name]})` : '';
-    const rosterHtml = t.roster.map(p => `<div class="player${p===t.captain?' captain':''}">${p}${p===t.captain?' ★':''}</div>`).join('');
-    const subsHtml = t.subs && t.subs.length ? t.subs.map(p=>`<div class="player sub">${p}</div>`).join('') : '<div class="player sub" style="color:var(--muted2);font-style:italic">None</div>';
-    const emergHtml = t.emergency ? `<div class="player emerg">${t.emergency}</div>` : `<div class="player emerg" style="font-style:italic">None approved</div>`;
+// AUTOCOMPLETE
+function acInput(n){
+  const val=document.getElementById('team'+n).value.toLowerCase();
+  const dd=document.getElementById('dd'+n);
+  if(!val){dd.classList.remove('open');return;}
+  const matches=teamNames.filter(t=>t.toLowerCase().includes(val)).slice(0,8);
+  if(!matches.length){dd.classList.remove('open');return;}
+  dd.innerHTML=matches.map(t=>{
+    const team=teams.find(x=>x.name===t);
+    return `<div class="dd-item" onmousedown="selectTeam(${n},'${t.replace(/'/g,"\\'")}')"><span class="dd-abbr">${team.abbr}</span>${t}</div>`;
+  }).join('');
+  dd.classList.add('open');
+}
+function acFocus(n){acInput(n);}
+function acBlur(n){setTimeout(()=>document.getElementById('dd'+n).classList.remove('open'),150);}
+function selectTeam(n,name){
+  document.getElementById('team'+n).value=name;
+  document.getElementById('dd'+n).classList.remove('open');
+  if(n===1) sel1=name; else sel2=name;
+}
+
+function findMatchup(){
+  const t1=document.getElementById('team1').value.trim();
+  const t2=document.getElementById('team2').value.trim();
+  sel1=t1; sel2=t2;
+  if(!t1||!t2){alert('Please select two teams');return;}
+  if(t1===t2){alert('Select two different teams');return;}
+  const h2h=getH2H(t1,t2);
+  const res=document.getElementById('matchup-result');
+  const gd1=groupData[t1],gd2=groupData[t2];
+  const sameGroup=gd1&&gd2&&gd1[2]===gd2[2];
+
+  // count series wins
+  let w1=0,w2=0;
+  h2h.forEach(m=>{if(m.winner===t1)w1++;else w2++;});
+
+  const t1obj=teams.find(t=>t.name===t1),t2obj=teams.find(t=>t.name===t2);
+
+  res.innerHTML=`
+    <div class="mr-header">
+      <div class="mr-team">${t1}</div>
+      <div class="mr-score"><span class="${w1>w2?'w':'l'}">${w1}</span> – <span class="${w2>w1?'w':'l'}">${w2}</span></div>
+      <div class="mr-team">${t2}</div>
+      ${w1===0&&w2===0?'<span style="font-size:12px;color:var(--muted);margin-left:8px">These teams never met this tournament</span>':''}
+    </div>
+    ${gd1&&gd2?`<div style="display:flex;gap:24px;margin-bottom:12px">
+      <div><div class="mr-label">Group ${gd1[2]} Record</div><div style="font-size:13px;font-weight:600;color:var(--text)">${t1}: <span style="color:var(--green)">${gd1[0]}W</span> – <span style="color:var(--red)">${gd1[1]}L</span> (${gd1[3]||'Eliminated'})</div></div>
+      <div><div class="mr-label">Group ${gd2[2]} Record</div><div style="font-size:13px;font-weight:600;color:var(--text)">${t2}: <span style="color:var(--green)">${gd2[0]}W</span> – <span style="color:var(--red)">${gd2[1]}L</span> (${gd2[3]||'Eliminated'})</div></div>
+    </div>`:''}
+    ${h2h.length?`<div class="mr-label">Match History</div>
+    <div class="match-history">${h2h.map(m=>`
+      <div class="mh-row">
+        <span class="mh-stage">${m.stage}</span>
+        <span class="mh-teams">${m.a} vs ${m.b}</span>
+        ${m.scoreA!==null?`<span class="mh-score ${m.winner===t1?'win':'loss'}">${m.scoreA}–${m.scoreB}</span>`:'<span class="mh-score" style="color:var(--muted)">—</span>'}
+        <span class="mh-winner">🏆 ${m.winner}</span>
+      </div>`).join('')}
+    </div>`:`<div class="never-played">No head-to-head matches found between these teams.</div>`}
+    <div style="margin-top:10px"><button class="compare-btn" style="padding:6px 12px;font-size:12px" onclick="triggerCompare('${t1}','${t2}')">Compare Rosters →</button></div>
+  `;
+  res.classList.add('open');
+  res.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function clearMatchup(){
+  document.getElementById('team1').value='';
+  document.getElementById('team2').value='';
+  sel1=null;sel2=null;
+  document.getElementById('matchup-result').classList.remove('open');
+}
+
+// COMPARE
+function triggerCompare(n1,n2){
+  const t1=teams.find(t=>t.name===n1),t2=teams.find(t=>t.name===n2);
+  if(!t1||!t2) return;
+  const panel=document.getElementById('compare-panel');
+  const content=document.getElementById('compare-content');
+  const makeList=(t)=>t.roster.map(p=>`
+    <div class="cp-player">
+      <span class="cp-player-name${p===t.captain?' cap':''}">${p}${p===t.captain?' ★':''}</span>
+      <span class="cp-kd">K/D N/A*</span>
+    </div>`).join('');
+  content.innerHTML=`
+    <div class="cp-cols">
+      <div><div class="cp-team-name">${t1.name}</div>${makeList(t1)}</div>
+      <div><div class="cp-team-name">${t2.name}</div>${makeList(t2)}</div>
+    </div>
+    <div class="cp-note">* K/D stats require API access to the match engine database — not available in the public HTML. Tim would need to expose a stats endpoint for this to be live data.</div>`;
+  panel.classList.add('open');
+  panel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+function selectForCompare(name){
+  const btn=document.querySelector(`[data-compare="${name}"]`);
+  if(compareTeams.includes(name)){
+    compareTeams=compareTeams.filter(t=>t!==name);
+    if(btn) btn.classList.remove('selected');
+  } else {
+    if(compareTeams.length>=2){
+      const old=compareTeams.shift();
+      const oldBtn=document.querySelector(`[data-compare="${old}"]`);
+      if(oldBtn) oldBtn.classList.remove('selected');
+    }
+    compareTeams.push(name);
+    if(btn) btn.classList.add('selected');
+  }
+  if(compareTeams.length===2) triggerCompare(compareTeams[0],compareTeams[1]);
+}
+
+function clearCompare(){
+  compareTeams=[];
+  document.getElementById('compare-panel').classList.remove('open');
+  document.querySelectorAll('.compare-btn').forEach(b=>b.classList.remove('selected'));
+}
+
+// CHIPS
+function toggleChip(id){
+  const el=document.getElementById('chip-'+id);
+  if(activeChips.has(id)){activeChips.delete(id);el.classList.remove('active');}
+  else{activeChips.add(id);el.classList.add('active');}
+  applyFilters();
+}
+
+function applyFilters(){
+  const q=document.getElementById('search').value.toLowerCase();
+  const sort=document.getElementById('sort').value;
+  filtered=teams.filter(t=>{
+    if(q&&!(t.name.toLowerCase().includes(q)||t.abbr.toLowerCase().includes(q)||t.roster.some(p=>p.toLowerCase().includes(q))||(t.subs||[]).some(p=>p.toLowerCase().includes(q))||(t.coach||'').toLowerCase().includes(q))) return false;
+    if(activeChips.has('coached')&&!t.coach) return false;
+    if(activeChips.has('uncoached')&&t.coach) return false;
+    if(activeChips.has('shitlist')&&!t.shitlist) return false;
+    if(activeChips.has('playoffs')&&!playoffTeams.has(t.name)) return false;
+    return true;
+  });
+  const getW=t=>{const g=groupData[t.name];return g?g[0]:0;};
+  if(sort==='alpha-desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
+  else if(sort==='seed') filtered.sort((a,b)=>(seeds[a.name]||999)-(seeds[b.name]||999));
+  else if(sort==='seed-desc') filtered.sort((a,b)=>(seeds[b.name]||999)-(seeds[a.name]||999));
+  else if(sort==='record') filtered.sort((a,b)=>getW(b)-getW(a));
+  else filtered.sort((a,b)=>a.name.localeCompare(b.name));
+  renderGrid();
+}
+
+function renderGrid(){
+  document.getElementById('count').textContent=filtered.length;
+  const grid=document.getElementById('grid');
+  if(!filtered.length){grid.innerHTML='<div class="no-results">No teams found</div>';return;}
+  grid.innerHTML=filtered.map((t,i)=>{
+    const sl=t.shitlist;
+    const s=seeds[t.name]?`(${seeds[t.name]})`:'';
+    const gd=groupData[t.name];
+    const wins=gd?gd[0]:0,losses=gd?gd[1]:0;
+    const recClass=wins>losses?'good':losses>wins?'bad':'ok';
+    const rHtml=t.roster.map(p=>`<div class="player${p===t.captain?' captain':''}">${p}${p===t.captain?' ★':''}</div>`).join('');
+    const sHtml=t.subs&&t.subs.length?t.subs.map(p=>`<div class="player sub">${p}</div>`).join(''):`<div class="player sub" style="color:var(--muted2);font-style:italic">None</div>`;
+    const eHtml=t.emergency?`<div class="player" style="color:var(--muted)">${t.emergency}</div>`:`<div class="player" style="color:var(--muted2);font-style:italic">None approved</div>`;
     return `<div class="team-card${sl?' shitlist-card':''}" id="card-${i}">
       <div class="card-header" onclick="toggle(${i})">
         <div class="team-abbr${sl?' red':''}">${t.abbr}</div>
         <div class="card-title-wrap">
-          <div class="team-name">${t.name}${sl?'<span class="shitlist-tag">shitlist</span>':''}</div>
+          <div class="team-name">${t.name}${sl?'<span class="shitlist-tag" style="margin-left:5px">shitlist</span>':''}</div>
+          <div class="card-badges">
+            ${gd?`<span class="group-badge">Group ${gd[2]} · ${gd[3]||'Elim'}</span>`:''}
+            ${gd?`<span class="record-badge ${recClass}">${wins}W–${losses}L</span>`:''}
+          </div>
         </div>
         <span class="seed-num">${s}</span>
-        <button class="collapse-btn" aria-label="Toggle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
+        <button class="compare-btn" data-compare="${t.name}" onclick="event.stopPropagation();selectForCompare('${t.name.replace(/'/g,"\\'")}')">Compare</button>
+        <button class="collapse-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button>
       </div>
       <div class="card-body">
         <div class="card-cols">
-          <div>
-            <div class="col-label">Roster</div>
-            ${rosterHtml}
-          </div>
-          <div>
-            <div class="col-label">Subs</div>
-            ${subsHtml}
-          </div>
+          <div><div class="col-label">Roster</div>${rHtml}</div>
+          <div><div class="col-label">Subs</div>${sHtml}</div>
         </div>
         <div class="card-divider"></div>
         <div class="col-label" style="margin-bottom:4px">Captain</div>
         <div class="player captain" style="margin-bottom:10px">${t.captain}</div>
         <div class="col-label" style="margin-bottom:4px">Emergency Subs</div>
-        <div style="margin-bottom:10px">${emergHtml}</div>
+        <div style="margin-bottom:10px">${eHtml}</div>
         <div class="staff-row">
-          <div class="staff-item"><div class="col-label">Coach</div><div class="staff-val${t.coach?'':' none'}">${t.coach||'None'}</div></div>
-          <div class="staff-item"><div class="col-label">Assistant Coach</div><div class="staff-val${t.acoach?'':' none'}">${t.acoach||'None'}</div></div>
+          <div><div class="col-label">Coach</div><div class="staff-val${t.coach?'':' none'}">${t.coach||'None'}</div></div>
+          <div><div class="col-label">Assistant Coach</div><div class="staff-val${t.acoach?'':' none'}">${t.acoach||'None'}</div></div>
         </div>
       </div>
     </div>`;
   }).join('');
 }
 
-function toggle(i) {
-  document.getElementById('card-'+i).classList.toggle('collapsed');
-}
+function toggle(i){document.getElementById('card-'+i).classList.toggle('collapsed');}
 
-function applyFilters() {
-  const q = document.getElementById('search').value.toLowerCase();
-  const sort = document.getElementById('sort').value;
-  filtered = teams.filter(t => {
-    if (!q) return true;
-    return t.name.toLowerCase().includes(q) || t.abbr.toLowerCase().includes(q) ||
-      t.roster.some(p=>p.toLowerCase().includes(q)) ||
-      (t.subs||[]).some(p=>p.toLowerCase().includes(q)) ||
-      (t.coach||'').toLowerCase().includes(q) || (t.acoach||'').toLowerCase().includes(q);
-  });
-  if (sort==='alpha-desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
-  else if (sort==='seed') filtered.sort((a,b)=>(seeds[a.name]||999)-(seeds[b.name]||999));
-  else if (sort==='seed-desc') filtered.sort((a,b)=>(seeds[b.name]||999)-(seeds[a.name]||999));
-  else filtered.sort((a,b)=>a.name.localeCompare(b.name));
-  renderGrid();
-}
-
-document.getElementById('search').addEventListener('input', applyFilters);
-document.getElementById('sort').addEventListener('change', applyFilters);
+document.getElementById('search').addEventListener('input',applyFilters);
+document.getElementById('sort').addEventListener('change',applyFilters);
 renderGrid();
 </script>
 </body>
