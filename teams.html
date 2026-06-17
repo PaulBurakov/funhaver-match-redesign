@@ -17,15 +17,15 @@
   --muted:#6b7590;
   --muted2:#3d4560;
 }
-body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;min-height:100vh}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:12px;font-weight:400;min-height:100vh}
 
 nav{display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 24px;height:52px;position:sticky;top:0;background:var(--bg);z-index:200}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:8px}
 .nav-logo img{height:24px}
-.nav-wordmark{font-size:14px;font-weight:700;color:var(--cyan);letter-spacing:0.06em}
+.nav-wordmark{font-size:13px;font-weight:600;color:var(--cyan);letter-spacing:0.04em}
 .nav-sep{width:1px;height:20px;background:var(--border);margin:0 8px}
 .nav-links{display:flex}
-.nav-link{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:0 14px;height:52px;display:flex;align-items:center;border-bottom:2px solid transparent}
+.nav-link{color:var(--muted);text-decoration:none;font-size:12px;font-weight:400;padding:0 14px;height:52px;display:flex;align-items:center;border-bottom:2px solid transparent}
 .nav-link:hover{color:var(--text)}
 .nav-link.active{color:var(--cyan);border-bottom-color:var(--cyan)}
 .nav-right{margin-left:auto;position:relative}
@@ -42,7 +42,7 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 .tourney-item.active{color:var(--cyan)}
 
 .matchup-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 24px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.matchup-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap}
+.matchup-label{font-size:11px;font-weight:500;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;white-space:nowrap}
 .ac-wrap{position:relative;flex:1;min-width:150px;max-width:220px}
 .ac-input{width:100%;background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:6px 10px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none}
 .ac-input:focus{border-color:rgba(255,255,255,0.2)}
@@ -53,7 +53,7 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 .ac-item:hover{background:rgba(255,255,255,0.04)}
 .ac-abbr{font-size:9px;font-weight:700;color:var(--cyan);min-width:26px;text-align:center}
 .vs{font-size:11px;color:var(--muted);font-weight:600}
-.lookup-btn{background:var(--surface);border:1px solid rgba(255,255,255,0.15);color:var(--text);padding:6px 12px;border-radius:4px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer}
+.lookup-btn{background:var(--surface);border:1px solid rgba(255,255,255,0.12);color:var(--text);padding:5px 10px;border-radius:4px;font-size:11px;font-weight:400;font-family:'Inter',sans-serif;cursor:pointer}
 .lookup-btn:hover{border-color:rgba(255,255,255,0.25)}
 .clear-btn{background:none;border:none;color:var(--muted);font-size:12px;font-family:'Inter',sans-serif;cursor:pointer;padding:6px}
 .clear-btn:hover{color:var(--text)}
@@ -61,11 +61,11 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 .matchup-result{background:#111520;border-bottom:1px solid var(--border);padding:16px 24px;display:none}
 .matchup-result.open{display:block}
 .mr-teams{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.mr-tname{font-size:15px;font-weight:700;color:#fff}
-.mr-score{font-size:20px;font-weight:800;color:var(--text);padding:0 8px}
+.mr-tname{font-size:13px;font-weight:600;color:#fff}
+.mr-score{font-size:16px;font-weight:700;color:var(--text);padding:0 8px}
 .mr-score .w{color:var(--cyan)}
 .mr-score .l{color:var(--muted)}
-.section-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.section-label{font-size:9px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
 .records-row{display:flex;gap:32px;margin-bottom:14px}
 .record-block{}
 .record-val{font-size:13px;font-weight:600;color:var(--text);margin-top:2px}
@@ -97,7 +97,7 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 #search:focus{border-color:rgba(255,255,255,0.2)}
 #sort{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:6px 10px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none;cursor:pointer}
 .filters{display:flex;gap:6px;flex-wrap:wrap}
-.chip{font-size:11px;padding:4px 10px;border-radius:3px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif}
+.chip{font-size:11px;font-weight:400;padding:3px 9px;border-radius:3px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-family:'Inter',sans-serif}
 .chip:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
 .chip.on{color:var(--cyan);border-color:rgba(23,212,232,0.3)}
 .chip.red.on{color:#e05555;border-color:rgba(224,85,85,0.3)}
@@ -108,11 +108,11 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 .team-card{background:var(--surface);cursor:pointer}
 .team-card.shitlist-card{border-left:2px solid rgba(224,85,85,0.5)}
 .card-header{padding:12px 14px;display:flex;align-items:center;gap:10px}
-.team-abbr{width:32px;height:32px;border-radius:4px;background:rgba(23,212,232,0.08);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:0.04em;flex-shrink:0}
+.team-abbr{width:30px;height:30px;border-radius:3px;background:rgba(23,212,232,0.08);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--cyan);letter-spacing:0.04em;flex-shrink:0}
 .team-abbr.red{background:rgba(224,85,85,0.08);color:#e05555}
 .card-info{flex:1;min-width:0}
-.tname{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tmeta{font-size:11px;color:var(--muted);margin-top:1px}
+.tname{font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tmeta{font-size:11px;color:var(--muted);margin-top:1px;font-weight:400}
 .tmeta .rec{color:var(--text)}
 .seed{font-size:11px;color:var(--muted);flex-shrink:0}
 .chevron{background:none;border:none;color:var(--muted);cursor:pointer;padding:2px;display:flex;align-items:center}
@@ -121,8 +121,8 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 .card-body{padding:0 14px 12px;border-top:1px solid var(--border)}
 .team-card.closed .card-body{display:none}
 .card-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 16px;margin-top:10px}
-.col-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
-.player{font-size:11px;color:var(--text);padding:1px 0;line-height:1.5}
+.col-label{font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.player{font-size:11px;color:var(--text);padding:1px 0;line-height:1.4;font-weight:400}
 .player.cap{color:var(--cyan)}
 .player.sub{color:var(--muted)}
 .player.none{color:var(--muted2);font-style:italic}
@@ -202,7 +202,7 @@ footer a{color:var(--muted);text-decoration:none}
 </div>
 
 <div style="padding:16px 24px 0">
-  <div style="font-size:24px;font-weight:700;color:#fff">52 Teams</div>
+  <div style="font-size:18px;font-weight:600;color:#fff">52 Teams</div>
 </div>
 <div class="toolbar">
   <div class="search-wrap">
