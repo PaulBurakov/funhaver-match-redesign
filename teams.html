@@ -538,8 +538,7 @@ function renderGrid(){
         <div class="card-title-wrap">
           <div class="team-name">${t.name}${sl?'<span class="shitlist-tag" style="margin-left:5px">shitlist</span>':''}</div>
           <div class="card-badges">
-            ${gi?`<span class="group-badge">Group ${gi[0]} · ${gi[1]}</span>`:''}
-            ${gd?`<span class="record-badge ${recClass}">${wins}W–${losses}L overall</span>`:''}
+            ${gd?`<span class="record-badge ${recClass}">${wins}W–${losses}L</span>`:''}
           </div>
         </div>
         <span class="seed-num">${s}</span>
