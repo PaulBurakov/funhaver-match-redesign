@@ -18,7 +18,7 @@
 body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;min-height:100vh}
 
 /* NAV */
-nav{display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 24px;height:52px;position:sticky;top:0;background:rgba(14,16,21,0.97);backdrop-filter:blur(10px);z-index:200}
+nav{display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 24px;height:52px;position:sticky;top:0;background:rgba(14,16,21,0.97);z-index:200}
 .nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-right:8px}
 .nav-logo img{height:24px}
 .nav-wordmark{font-size:14px;font-weight:700;color:var(--cyan);letter-spacing:0.06em}
@@ -138,7 +138,7 @@ nav{display:flex;align-items:center;border-bottom:1px solid var(--border);paddin
 .staff-val{font-size:11px;color:var(--muted)}
 .staff-val.none{color:var(--muted2);font-style:italic}
 .no-results{grid-column:1/-1;text-align:center;padding:60px;color:var(--muted);font-size:14px}
-.tourney-menu{position:absolute;top:56px;right:24px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;z-index:300;min-width:220px;padding:8px 0;display:none;box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+.tourney-menu{position:absolute;top:56px;right:24px;background:var(--surface2);border:1px solid var(--border);border-radius:8px;z-index:300;min-width:220px;padding:8px 0;display:none;border:1px solid var(--border)}
 .tourney-menu.open{display:block}
 .tourney-group{padding:6px 0}
 .tourney-group+.tourney-group{border-top:1px solid var(--border)}
@@ -193,7 +193,7 @@ footer a{color:var(--muted);text-decoration:none}
 
 <!-- MATCHUP FINDER -->
 <div class="matchup-bar">
-  <span class="matchup-title">⚔ Matchup Finder</span>
+  <span class="matchup-title">Matchup Finder</span>
   <div class="autocomplete-wrap" id="wrap1">
     <input class="autocomplete-input" id="team1" placeholder="Team 1..." autocomplete="off" oninput="acInput(1)" onfocus="acFocus(1)" onblur="acBlur(1)">
     <div class="dropdown" id="dd1"></div>
@@ -458,7 +458,7 @@ function findMatchup(){
         <span class="mh-stage">${m.stage}</span>
         <span class="mh-teams">${m.a} vs ${m.b}</span>
         ${m.scoreA!==null?`<span class="mh-score ${m.winner===t1?'win':'loss'}">${m.scoreA}–${m.scoreB}</span>`:'<span class="mh-score" style="color:var(--muted)">—</span>'}
-        <span class="mh-winner">🏆 ${m.winner}</span>
+        <span class="mh-winner">${m.winner}</span>
       </div>`).join('')}
     </div>`:`<div class="never-played">No head-to-head matches found between these teams.</div>`}
     <div style="margin-top:10px"><button class="compare-btn" style="padding:6px 12px;font-size:12px" onclick="triggerCompare('${t1}','${t2}')">Compare Rosters →</button></div>
@@ -482,7 +482,7 @@ function triggerCompare(n1,n2){
   const content=document.getElementById('compare-content');
   const makeList=(t)=>t.roster.map(p=>`
     <div class="cp-player">
-      <span class="cp-player-name${p===t.captain?' cap':''}">${p}${p===t.captain?' ★':''}</span>
+      <span class="cp-player-name${p===t.captain?' cap':''}">${p}</span>
       <span class="cp-kd">K/D N/A*</span>
     </div>`).join('');
   content.innerHTML=`
@@ -558,7 +558,7 @@ function renderGrid(){
     const gi=groupInfo[t.name];
     const wins=gd?gd[0]:0,losses=gd?gd[1]:0;
     const recClass=wins>losses?'good':losses>wins?'bad':'ok';
-    const rHtml=t.roster.map(p=>`<div class="player${p===t.captain?' captain':''}">${p}${p===t.captain?' ★':''}</div>`).join('');
+    const rHtml=t.roster.map(p=>`<div class="player${p===t.captain?' captain':''}">${p}${p===t.captain?' <span style="font-size:9px;color:var(--cyan);font-weight:600;letter-spacing:0.06em;text-transform:uppercase">CPT</span>':''}</div>`).join('');
     const sHtml=t.subs&&t.subs.length?t.subs.map(p=>`<div class="player sub">${p}</div>`).join(''):`<div class="player sub" style="color:var(--muted2);font-style:italic">None</div>`;
     const eHtml=t.emergency?`<div class="player" style="color:var(--muted)">${t.emergency}</div>`:`<div class="player" style="color:var(--muted2);font-style:italic">None approved</div>`;
     return `<div class="team-card${sl?' shitlist-card':''}" id="card-${i}">
