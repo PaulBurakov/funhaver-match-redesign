@@ -238,21 +238,37 @@ const seeds={
   'yung thug':28,'Zodiac Esports':38
 };
 
-// group records: [wins, losses, group, finish]
+// groupInfo: [group, finish]
+const groupInfo={
+  'apples':['A','1st'],'Berzerkers':['A','2nd'],'Lean is Law':['A','Elim'],'Anywhere But Here':['A','Elim'],
+  'Evictix':['B','1st'],'WhyWeSleeping':['B','2nd'],'yung thug':['B','Elim'],'Seraph':['B','Elim'],
+  'Jackpot':['C','1st'],'Eternal Focus Night':['C','2nd'],'tadpoles':['C','Elim'],'Oklahoma':['C','Elim'],
+  '4kt':['D','1st'],'Division One':['D','2nd'],'Koala university':['D','Elim'],'Miracle Makers':['D','Elim'],
+  'really good players':['E','1st'],'Clovers':['E','2nd'],'HEAVY hittas':['E','Elim'],'mute up':['E','Elim'],
+  'Nightblood Gaming':['F','1st'],'QoR Piggies':['F','2nd'],'tangerines':['F','Elim'],'Volitant':['F','Elim'],
+  'Blue Otter':['G','1st'],'Alliance Guardians':['G','2nd'],'ROSO':['G','Elim'],'Pug Warriors':['G','Elim'],
+  'Dynamo':['H','1st'],'Tempers':['H','2nd'],'Flying Hippos':['H','Elim'],'ROSO GC':['H','Elim'],
+  'Evil Geniuses Academy':['I','1st'],'Eternal Focus':['I','2nd'],'HEHEHEHA':['I','Elim'],'NOT winning':['I','Elim'],
+  'barbeque chicken':['J','1st'],'Curry and Friends':['J','2nd'],'Celestial Esports':['J','Elim'],'The Ellars':['J','Elim'],
+  'inters':['K','1st'],'Country Roads':['K','2nd'],'Ares2 Legion':['K','Elim'],'GREY':['K','Elim'],
+  'ROSE':['L','1st'],'Zodiac Esports':['L','2nd'],'Xora Esports':['L','Elim'],'ADHD AIMERS':['L','Elim'],
+  'NXG':['M','1st'],'focused on gaming':['M','2nd'],'Omnipotent Gaming':['M','Elim'],'Ice Fishers':['M','Elim']
+};
+// overall tournament record [wins, losses]
 const groupData={
-  'apples':[3,0,'A','1st'],'Berzerkers':[2,1,'A','2nd'],'Lean is Law':[0,2,'A',null],'Anywhere But Here':[1,2,'A',null],
-  'Evictix':[3,0,'B','1st'],'WhyWeSleeping':[2,1,'B','2nd'],'yung thug':[1,2,'B',null],'Seraph':[0,2,'B',null],
-  'Jackpot':[3,0,'C','1st'],'Eternal Focus Night':[2,1,'C','2nd'],'tadpoles':[1,2,'C',null],'Oklahoma':[0,2,'C',null],
-  '4kt':[3,0,'D','1st'],'Division One':[2,1,'D','2nd'],'Koala university':[0,2,'D',null],'Miracle Makers':[1,2,'D',null],
-  'really good players':[3,0,'E','1st'],'Clovers':[2,1,'E','2nd'],'HEAVY hittas':[1,2,'E',null],'mute up':[0,2,'E',null],
-  'Nightblood Gaming':[3,0,'F','1st'],'QoR Piggies':[2,1,'F','2nd'],'tangerines':[1,2,'F',null],'Volitant':[0,2,'F',null],
-  'Blue Otter':[3,0,'G','1st'],'Alliance Guardians':[2,1,'G','2nd'],'ROSO':[0,2,'G',null],'Pug Warriors':[1,2,'G',null],
-  'Dynamo':[3,0,'H','1st'],'Tempers':[2,1,'H','2nd'],'Flying Hippos':[1,2,'H',null],'ROSO GC':[0,2,'H',null],
-  'Evil Geniuses Academy':[3,0,'I','1st'],'Eternal Focus':[2,1,'I','2nd'],'HEHEHEHA':[1,2,'I',null],'NOT winning':[0,2,'I',null],
-  'barbeque chicken':[3,0,'J','1st'],'Curry and Friends':[2,1,'J','2nd'],'Celestial Esports':[1,2,'J',null],'The Ellars':[0,2,'J',null],
-  'inters':[3,0,'K','1st'],'Country Roads':[2,1,'K','2nd'],'Ares2 Legion':[1,2,'K',null],'GREY':[0,2,'K',null],
-  'ROSE':[3,0,'L','1st'],'Zodiac Esports':[2,1,'L','2nd'],'Xora Esports':[1,2,'L',null],'ADHD AIMERS':[0,2,'L',null],
-  'NXG':[3,0,'M','1st'],'focused on gaming':[2,1,'M','2nd'],'Omnipotent Gaming':[1,2,'M',null],'Ice Fishers':[0,2,'M',null]
+  'Nightblood Gaming':[7,0],'Evil Geniuses Academy':[6,1],'4kt':[5,1],'barbeque chicken':[5,1],
+  'apples':[4,1],'Evictix':[4,1],'really good players':[4,1],'Division One':[4,2],
+  'Blue Otter':[3,1],'Dynamo':[3,1],'inters':[3,1],'ROSE':[3,1],'NXG':[3,1],'Jackpot':[3,1],
+  'Eternal Focus Night':[3,2],'Clovers':[3,2],
+  'Berzerkers':[2,2],'WhyWeSleeping':[2,2],'QoR Piggies':[2,2],'Alliance Guardians':[2,2],
+  'Tempers':[2,2],'Eternal Focus':[2,2],'Curry and Friends':[2,2],'Country Roads':[2,2],
+  'Zodiac Esports':[2,2],'focused on gaming':[2,2],
+  'Anywhere But Here':[1,2],'HEAVY hittas':[1,2],'tangerines':[1,2],'Pug Warriors':[1,2],
+  'Flying Hippos':[1,2],'HEHEHEHA':[1,2],'Celestial Esports':[1,2],'Ares2 Legion':[1,2],
+  'yung thug':[1,3],'tadpoles':[1,3],'Miracle Makers':[1,3],'Xora Esports':[1,3],'Omnipotent Gaming':[1,3],
+  'Lean is Law':[0,2],'Seraph':[0,2],'Oklahoma':[0,2],'Koala university':[0,2],'mute up':[0,2],
+  'Volitant':[0,2],'ROSO':[0,2],'ROSO GC':[0,2],'NOT winning':[0,2],'The Ellars':[0,2],
+  'ADHD AIMERS':[0,2],'Ice Fishers':[0,2],'GREY':[0,3]
 };
 
 // Full match history: [stage, teamA, scoreA, scoreB, teamB]
@@ -405,8 +421,8 @@ function findMatchup(){
       ${w1===0&&w2===0?'<span style="font-size:12px;color:var(--muted);margin-left:8px">These teams never met this tournament</span>':''}
     </div>
     ${gd1&&gd2?`<div style="display:flex;gap:24px;margin-bottom:12px">
-      <div><div class="mr-label">Group ${gd1[2]} Record</div><div style="font-size:13px;font-weight:600;color:var(--text)">${t1}: <span style="color:var(--green)">${gd1[0]}W</span> – <span style="color:var(--red)">${gd1[1]}L</span> (${gd1[3]||'Eliminated'})</div></div>
-      <div><div class="mr-label">Group ${gd2[2]} Record</div><div style="font-size:13px;font-weight:600;color:var(--text)">${t2}: <span style="color:var(--green)">${gd2[0]}W</span> – <span style="color:var(--red)">${gd2[1]}L</span> (${gd2[3]||'Eliminated'})</div></div>
+      <div><div class="mr-label">Overall Record</div><div style="font-size:13px;font-weight:600;color:var(--text)">${t1}: <span style="color:var(--green)">${gd1[0]}W</span> – <span style="color:var(--red)">${gd1[1]}L</span></div></div>
+      <div><div class="mr-label">Overall Record</div><div style="font-size:13px;font-weight:600;color:var(--text)">${t2}: <span style="color:var(--green)">${gd2[0]}W</span> – <span style="color:var(--red)">${gd2[1]}L</span></div></div>
     </div>`:''}
     ${h2h.length?`<div class="mr-label">Match History</div>
     <div class="match-history">${h2h.map(m=>`
@@ -493,7 +509,7 @@ function applyFilters(){
     if(activeChips.has('playoffs')&&!playoffTeams.has(t.name)) return false;
     return true;
   });
-  const getW=t=>{const g=groupData[t.name];return g?g[0]:0;};
+  const getW=t=>{const g=groupData[t.name];return g?g[0]-(g[1]*0.1):0;};
   if(sort==='alpha-desc') filtered.sort((a,b)=>b.name.localeCompare(a.name));
   else if(sort==='seed') filtered.sort((a,b)=>(seeds[a.name]||999)-(seeds[b.name]||999));
   else if(sort==='seed-desc') filtered.sort((a,b)=>(seeds[b.name]||999)-(seeds[a.name]||999));
@@ -510,6 +526,7 @@ function renderGrid(){
     const sl=t.shitlist;
     const s=seeds[t.name]?`(${seeds[t.name]})`:'';
     const gd=groupData[t.name];
+    const gi=groupInfo[t.name];
     const wins=gd?gd[0]:0,losses=gd?gd[1]:0;
     const recClass=wins>losses?'good':losses>wins?'bad':'ok';
     const rHtml=t.roster.map(p=>`<div class="player${p===t.captain?' captain':''}">${p}${p===t.captain?' ★':''}</div>`).join('');
@@ -521,8 +538,8 @@ function renderGrid(){
         <div class="card-title-wrap">
           <div class="team-name">${t.name}${sl?'<span class="shitlist-tag" style="margin-left:5px">shitlist</span>':''}</div>
           <div class="card-badges">
-            ${gd?`<span class="group-badge">Group ${gd[2]} · ${gd[3]||'Elim'}</span>`:''}
-            ${gd?`<span class="record-badge ${recClass}">${wins}W–${losses}L</span>`:''}
+            ${gi?`<span class="group-badge">Group ${gi[0]} · ${gi[1]}</span>`:''}
+            ${gd?`<span class="record-badge ${recClass}">${wins}W–${losses}L overall</span>`:''}
           </div>
         </div>
         <span class="seed-num">${s}</span>
