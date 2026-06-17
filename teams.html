@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teams — WILD//WEST Stage 2-6 | Funhaver.gg</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cyan:#17d4e8;
+  --cyan-dim:rgba(23,212,232,0.12);
+  --cyan-border:rgba(23,212,232,0.25);
+  --bg:#0a0c10;
+  --surface:#111318;
+  --surface2:#181c24;
+  --border:rgba(255,255,255,0.07);
+  --text:#e4e8f0;
+  --muted:#5a6275;
+  --muted2:#3a3f52;
+}
+body{background:var(--bg);color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;min-height:100vh}
+
+/* NAV */
+nav{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);padding:0 32px;height:56px;position:sticky;top:0;background:rgba(10,12,16,0.95);backdrop-filter:blur(8px);z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:32px}
+.nav-logo img{height:28px;width:auto}
+.nav-wordmark{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--cyan);letter-spacing:0.04em}
+.nav-links{display:flex;gap:0}
+.nav-link{color:var(--muted);text-decoration:none;font-size:13px;font-weight:500;padding:0 16px;height:56px;display:flex;align-items:center;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s;letter-spacing:0.03em}
+.nav-link:hover{color:var(--text)}
+.nav-link.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+
+/* HEADER */
+.header{padding:32px 32px 0}
+.tournament-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:600;letter-spacing:0.12em;color:var(--cyan);text-transform:uppercase;margin-bottom:6px}
+.tournament-title{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:800;color:#fff;letter-spacing:0.02em;line-height:1}
+
+/* TOOLBAR */
+.toolbar{padding:20px 32px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:320px}
+.search-wrap svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--muted);width:15px;height:15px}
+#search{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px 8px 34px;color:var(--text);font-size:13px;font-family:'Barlow',sans-serif;outline:none;transition:border-color 0.15s}
+#search::placeholder{color:var(--muted2)}
+#search:focus{border-color:var(--cyan-border)}
+.sort-select{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:8px 12px;color:var(--text);font-size:13px;font-family:'Barlow',sans-serif;outline:none;cursor:pointer}
+.sort-select:focus{border-color:var(--cyan-border)}
+.team-count{font-size:12px;color:var(--muted);margin-left:auto}
+.team-count span{color:var(--cyan);font-weight:600}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;padding:0 32px 48px}
+
+/* TEAM CARD */
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:border-color 0.15s,transform 0.15s;cursor:pointer}
+.team-card:hover{border-color:var(--cyan-border);transform:translateY(-2px)}
+.team-card.expanded .card-body{display:block}
+.card-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.team-abbr{width:38px;height:38px;border-radius:7px;background:var(--cyan-dim);border:1px solid var(--cyan-border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--cyan);letter-spacing:0.05em;flex-shrink:0}
+.team-abbr.shitlist{background:rgba(255,80,80,0.1);border-color:rgba(255,80,80,0.25);color:#ff5050}
+.card-title-wrap{flex:1;min-width:0}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:0.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.team-meta{font-size:11px;color:var(--muted);margin-top:1px}
+.shitlist-badge{font-size:9px;font-weight:700;background:rgba(255,80,80,0.15);color:#ff5050;border:1px solid rgba(255,80,80,0.3);border-radius:3px;padding:1px 5px;letter-spacing:0.06em;text-transform:uppercase;margin-left:6px;vertical-align:middle}
+.expand-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:color 0.15s,background 0.15s}
+.expand-btn:hover{color:var(--text);background:var(--surface2)}
+.expand-btn svg{width:16px;height:16px;transition:transform 0.2s}
+.team-card.expanded .expand-btn svg{transform:rotate(180deg)}
+
+.card-body{display:none;padding:0 16px 14px;border-top:1px solid var(--border)}
+.roster-section{margin-top:12px}
+.roster-section-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.players-list{display:flex;flex-direction:column;gap:3px}
+.player-row{display:flex;align-items:center;gap:8px;padding:4px 0}
+.player-dot{width:5px;height:5px;border-radius:50%;background:var(--muted2);flex-shrink:0}
+.player-dot.captain{background:var(--cyan)}
+.player-name{font-size:12px;color:var(--text);font-family:'Barlow',sans-serif}
+.player-name.captain{color:var(--cyan)}
+.captain-star{font-size:10px;color:var(--cyan);margin-left:2px}
+.sub-row .player-dot{background:var(--muted2);opacity:0.5}
+.sub-row .player-name{color:var(--muted)}
+.emerg-row .player-name{color:var(--muted2)}
+.staff-row{display:flex;align-items:center;gap:8px;padding:2px 0}
+.staff-label{font-size:10px;color:var(--muted2);min-width:50px}
+.staff-name{font-size:11px;color:var(--muted)}
+.none-text{font-size:11px;color:var(--muted2);font-style:italic}
+.divider{height:1px;background:var(--border);margin:10px 0}
+
+.no-results{grid-column:1/-1;text-align:center;padding:48px;color:var(--muted)}
+.no-results p{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;color:var(--muted);margin-bottom:4px}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:20px 32px;display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:11px}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--cyan)}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="https://funhaver.gg" class="nav-logo">
+    <img src="funhaver-mark-cyan.png" alt="Funhaver.gg">
+    <span class="nav-wordmark">FUNHAVER.GG</span>
+  </a>
+  <div class="nav-links">
+    <a href="https://funhaver.gg" class="nav-link">Home</a>
+    <a href="#" class="nav-link active">Teams</a>
+    <a href="groups.html" class="nav-link">Groups</a>
+    <a href="#" class="nav-link">Playoffs</a>
+  </div>
+</nav>
+
+<div class="header">
+  <div class="tournament-label">WILD//WEST Stage 2 · Qualifier 6</div>
+  <div class="tournament-title">52 TEAMS</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder="Search teams or players...">
+  </div>
+  <select class="sort-select" id="sort">
+    <option value="alpha">Team Name A–Z</option>
+    <option value="alpha-desc">Team Name Z–A</option>
+  </select>
+  <div class="team-count">Showing <span id="count">52</span> teams</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<footer>
+  <span>© 2026 FunhaverGG LLC. All rights reserved. · <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a></span>
+  <span>Not endorsed by Riot Games</span>
+</footer>
+
+<script>
+const teams = [
+  {abbr:"4K",name:"4kt",captain:"dmo#derek",roster:["snow#2574","dmo#derek","lIIlIlIIllIllIII#99999","johnny cox#6080","crosbycs#fps"],subs:["River#347"],emergency:"sen oasis#vvv",coach:null,acoach:null},
+  {abbr:"AA",name:"ADHD AIMERS",captain:"STOP THE VOICES#NOOOO",roster:["STOP THE VOICES#NOOOO","zzz#asp","alii#bae","Zydro#6789","Wast3d#esper"],subs:["nemophila#nami","GEESE SUPER FAN#nalyD"],emergency:null,coach:null,acoach:null},
+  {abbr:"AXG",name:"Alliance Guardians",captain:"RYKER#88777",roster:["RYKER#88777","Wildfire#wfxl","guimond#gui","twitch yearn#zzz","TMONEY#XITER"],subs:["D1 끝판왕#Utah"],emergency:null,coach:null,acoach:null},
+  {abbr:"ABH",name:"Anywhere But Here",captain:"SMC sharp#prime",roster:["SMC sharp#prime","sss#hope","Loumac#0000","VulcaN#STK","TTV Priceonval#1238"],subs:["SMC Grizz#tktok"],emergency:null,coach:null,acoach:null},
+  {abbr:"AP",name:"apples",captain:"100t jac#jac",roster:["FLY sorex#god","FLY ducq#smoph","solada is so FLY#704","FLY tonza#tones","FLY Leo#sleep"],subs:["FLY Quail#3500","NRG neT#jess"],emergency:null,coach:"WU slow#000",acoach:null},
+  {abbr:"A2L",name:"Ares2 Legion",captain:"ypnos#tzzz",roster:["ypnos#tzzz","BlankWill#blank","gwester#Smile","Spectral#aim","qhron#taqwa"],subs:["SpadezQT#SEN"],emergency:"Tndng#0407",coach:"SpadezQT#SEN",acoach:null},
+  {abbr:"BBC",name:"barbeque chicken",captain:"masterman#ysl",roster:["masterman#ysl","Rafe#ysl","dataKiller#pulp","Tofu#taps","pkle7#jyu0"],subs:["zestyahhlizard35#PBPFL"],emergency:null,coach:null,acoach:null},
+  {abbr:"BZK",name:"Berzerkers",captain:"wick#aaa",roster:["wick#aaa","Wreck it Ralph#Kace","v00doo#c0n","suki#tux","baze#7117"],subs:["xhowinho#gia"],emergency:null,coach:null,acoach:null},
+  {abbr:"BO",name:"Blue Otter",captain:"Zoestol#akame",roster:["Zoestol#akame","icie#1008","ahm4xx#15yr","heartless#css","om3y#8008"],subs:["bully free kit #mida"],emergency:"Ali#owbot",coach:"gillibun#boop",acoach:null},
+  {abbr:"CLST",name:"Celestial Esports",captain:"sﾔray#catfr",roster:["sﾔray#catfr","R3BEL#GHOST","n0ths#AK47","Juju#wlr","conrad#sophi"],subs:["blaize#00000"],emergency:null,coach:"Blight#420",acoach:null},
+  {abbr:"CLV",name:"Clovers",captain:"benjino#bndzi",roster:["benjino#bndzi","bam#alana","shua#JY6","Kold#six","ttv milanfragz#frelo"],subs:["bot125388#65542","dsnt#zzz"],emergency:null,coach:"Kaktus#gwen",acoach:null},
+  {abbr:"WVU",name:"Country Roads",captain:"Leone#DMA",roster:["Excite#MVP","Gucc107 TV#Sexy","Leone#DMA","chud#aka","ruben and me#laura"],subs:["churmz#pop"],emergency:null,coach:"churmz#pop",acoach:null},
+  {abbr:"IND",name:"Curry and Friends",captain:"albin#curry",roster:["albin#curry","snappypikachu69#zap","temper#1212","Cano#VIBIN","eyan#korea"],subs:["mus#tfa"],emergency:null,coach:null,acoach:null},
+  {abbr:"D1",name:"Division One",captain:"foreign#1511",roster:["foreign#1511","Calamity#6737","twitch boomy#WRLD","dynamic#cato","beeb#bron"],subs:["dapr#1of1"],emergency:null,coach:"style#viv",acoach:null},
+  {abbr:"DYNA",name:"Dynamo",captain:"max#vli",roster:["max#vli","antigone#777","twitch zanksval#15yr","Twitch ExpMoe#tsuga","dihawk#wya"],subs:["杰瑞 1#171"],emergency:null,coach:"mecole#yoshi",acoach:null},
+  {abbr:"EF",name:"Eternal Focus",captain:"pohler#snow",roster:["pohler#snow","twitch ummghoul#000","LFT ttvflux510#16war","Kizzy#ryry","Noodle#mazel"],subs:["note#005"],emergency:"GLORIOUS#Jm1v2",coach:null,acoach:null},
+  {abbr:"EFN",name:"Eternal Focus Night",captain:"carcrashley#oops",roster:["dragon#439","baypopper#ttv","s1n#anna","LFT Zinx#TTV","waggle#ton"],subs:["skyzo#ucd","Tiny#bum"],emergency:null,coach:"SacredSora#plain",acoach:null},
+  {abbr:"EVX",name:"Evictix",captain:"💩TTV Racoone#Bænie",roster:["💩TTV Racoone#Bænie","dre#pivo","RayUndaunted#Admo","WU Fair#1tap","299#Era8"],subs:["twitch 9atlas#katie"],emergency:null,coach:"JerryBDonut#gurbs",acoach:null,shitlist:true},
+  {abbr:"EGA",name:"Evil Geniuses Academy",captain:"EG Dark3st#light",roster:["EG Dark3st#light","EG Recoil#tyty","EG moobs#CAN","EG bdog#2916","EG big bean#jakee"],subs:["EG zerona#harpr","tyranitar#wedid"],emergency:null,coach:"EG Daeda#base",acoach:null},
+  {abbr:"HPO",name:"Flying Hippos",captain:"lim#333",roster:["lim#333","Juhwane#aespa","Rugrat#mugze","xelavct#viky","Veggie#4416"],subs:["zxcnzcv123456789#Logi"],emergency:null,coach:"Maxy#House",acoach:null},
+  {abbr:"FOG",name:"focused on gaming",captain:"yeetmachine ttv#777",roster:["ttv stevie steve#haker","key7#xoxo","puffy#ddmos","kero#sun","yeetmachine ttv#777"],subs:["mrmakeithappen#fog"],emergency:"dedmos#puffy",coach:null,acoach:null},
+  {abbr:"G59",name:"GREY",captain:"H5K5#G59",roster:["H5K5#G59","SECRETDEMON13#SALT","Jito#baka","Kybubu#meow","H5K5s good boy#puppy"],subs:["Linasyuh#999","bap#000"],emergency:"parbole#bird",coach:null,acoach:null},
+  {abbr:"HVY",name:"HEAVY hittas",captain:"sinaq#jules",roster:["maffood#Y NOT","Kadue#crack","jaxjabs#goat","JayBlrdy#ttv","sinaq#jules"],subs:["Coach EFT#arc"],emergency:null,coach:"Coach EFT#arc",acoach:null},
+  {abbr:"HE",name:"HEHEHEHA",captain:"nom#40mgs",roster:["nom#40mgs","twitch s1ay3rr#ego","FLY daimyo#86th","Watanabe#Wata","shrekasaurus#ttv"],subs:["DEAFHEAVEN#supr"],emergency:null,coach:"DEAFHEAVEN#supr",acoach:null},
+  {abbr:"IF",name:"Ice Fishers",captain:"Redefy#937",roster:["Redefy#937","crewcial#612","Comfy#NA 1","wulfanite#wulf","SCC dNd#zdl"],subs:["Duhstroyer#LDE"],emergency:null,coach:"ReZerohs#bless",acoach:null},
+  {abbr:"INT",name:"inters",captain:"Duck#MST",roster:["Duck#MST","MrSpudButt#777","Karma#bear","joshee#joshe","nephar1ous#2007"],subs:["cynthia#uxie","vani#0424"],emergency:null,coach:"parks#vera",acoach:null},
+  {abbr:"777",name:"Jackpot",captain:"awkua#777",roster:["awkua#777","huphh#FCity","chillin#bog","khs#169","twigz#ttt"],subs:["varsityggdotcom#dogo"],emergency:null,coach:"Crusty#COB",acoach:"envi#yuu"},
+  {abbr:"KU",name:"Koala university",captain:"Morgiana#fana",roster:["Morgiana#fana","Lethal#Ethan","TRENCH BABY T#Tman","So1o #Lm29","Seacurs3#na1"],subs:["frieren #cait"],emergency:null,coach:null,acoach:null},
+  {abbr:"LEAN",name:"Lean is Law",captain:"byrin#θcap",roster:["CouncilJeans44#NA1","butters#sthpk","Judar#Rukh","revenge#44444","byrin#θcap"],subs:["simon#gamer"],emergency:null,coach:"PhamChancellor#0023",acoach:null},
+  {abbr:"MM",name:"Miracle Makers",captain:"Touka#robux",roster:["orbital#scan","darm#envi","dreamcatcher#sss","dyl#1115","ghost ツ#LRK"],subs:["Cooyah#4401"],emergency:null,coach:"Touka#robux",acoach:null},
+  {abbr:"MU",name:"mute up",captain:"pingyu#637",roster:["pingyu#637","Cavelyr#1011","Leo WokWokWokWok#Wok","amers#cause","divorced luka#discd"],subs:["wilihelm#na2"],emergency:null,coach:null,acoach:null},
+  {abbr:"NBG",name:"Nightblood Gaming",captain:"sonofcar#11111",roster:["sonofcar#11111","toozy#000","zeek#777","Stunna#2006","stellar#bden"],subs:["igneous rock fan#rock"],emergency:null,coach:"MonSi #3505",acoach:"practo#SL1"},
+  {abbr:"NOT",name:"NOT winning",captain:"doom#NOT",roster:["doom#NOT","minikong#FLEX","Fizzy#NEON","Ghost#405","root of all evil#xen"],subs:["bradcat48#brad"],emergency:null,coach:null,acoach:null},
+  {abbr:"NX",name:"NXG",captain:"condor ave#2 8",roster:["Romeo#aord","condor ave#2 8","agr0#3d2y","cowpie867#na1","karizma#kariz"],subs:["twitch exeterval#333","shifty#vez"],emergency:null,coach:null,acoach:null},
+  {abbr:"OU",name:"Oklahoma",captain:"haste#fps",roster:["haste#fps","saitama#BLR","Ev0#wawa","suge 1#good","Yeager#isai"],subs:["g g#e e","popcorn#coach"],emergency:null,coach:"popcorn#coach",acoach:null},
+  {abbr:"OP",name:"Omnipotent Gaming",captain:"TonkeyyKong#LIVE",roster:["TonkeyyKong#LIVE","5ft harry potter#sonar","Laeno#Zesty","BBchrono#0830","Firewolf#Boost"],subs:["zeno#calm"],emergency:null,coach:null,acoach:null},
+  {abbr:"PW",name:"Pug Warriors",captain:"BadDog#BD67",roster:["BadDog#BD67","awayvl6#emma","h o#2010","Rygiic#Ttv","CROSS#CLVR"],subs:["Schway#999","AlexTheGoose#Bread"],emergency:null,coach:null,acoach:null},
+  {abbr:"QOR",name:"QoR Piggies",captain:"💩QOR Noble#lulu",roster:["💩QOR Noble#lulu","twitch wozyfps#2234","benderr#000","Ronga#0000","Zerb#swag"],subs:["Squirmor#ucf"],emergency:"junnie#602",coach:"QOR IvanSK1R#LOSKO",acoach:null,shitlist:true},
+  {abbr:"RGP",name:"really good players",captain:"icarus#shrb",roster:["icarus#shrb","snowing#xing","flasHH#2618","dancingdino371#roar","surge#zzz"],subs:["twitch zeeraval#bron"],emergency:null,coach:null,acoach:null},
+  {abbr:"ROSE",name:"ROSE",captain:"Sharpy#1037",roster:["Tim#dopey","ﾐ Bob#AyAy愛","jinwoo#bruno","CHAROD#STOIC","ROSE retrQ#MEIKO"],subs:["jjj#emma"],emergency:"ROSE k0rupt#bri",coach:"qip#melya",acoach:null},
+  {abbr:"RO",name:"ROSO",captain:"ricky1x#jazzy",roster:["XAViER#MAZE","a1dan#nancy","Fake#1of1","dunks1x#miku","ricky1x#jazzy"],subs:["zigie#000"],emergency:null,coach:null,acoach:null},
+  {abbr:"RG",name:"ROSO GC",captain:"Home Depot#kait",roster:["Home Depot#kait","gerald#nessa","SHIN3Y#pkmon","ashley#umi","stupid noob#loser"],subs:["attract#ROSO"],emergency:null,coach:"el bello#beyoh",acoach:"Erasthamus#dogs"},
+  {abbr:"SERA",name:"Seraph",captain:"najm#1015",roster:["najm#1015","Deity#LVgod","lethargic beast#hades","kmessi2#NA1","virtue#999"],subs:["Jeffie#0001"],emergency:null,coach:"ICE AGE MONSTER#SID",acoach:null},
+  {abbr:"TAD",name:"tadpoles",captain:"それは違うよ#Hello",roster:["それは違うよ#Hello","ff ff ff ff ff#frog","mitsucat#777","lazypig89#69969","fishr#444"],subs:["ray#sls"],emergency:null,coach:null,acoach:null},
+  {abbr:"TANG",name:"tangerines",captain:"beanann#4226",roster:["AKFORTYKEVIN#AK47","beanann#4226","Don Julio Combo#HLCAT","boba enjoyer#balls","killerjohnson77#677"],subs:["mFH#350","este#wgft"],emergency:null,coach:null,acoach:null},
+  {abbr:"TEMP",name:"Tempers",captain:"Satoru#toots",roster:["Satoru#toots","Dillon#LuLu","LIAN#NUNG","wertlle#yep","Booeyツ#bella"],subs:["PaMstou#kunai","Renity#恆改善"],emergency:null,coach:null,acoach:null},
+  {abbr:"TE",name:"The Ellars",captain:"ındra#akari",roster:["amamori#nat","klamran#4566","psych#Bella","ındra#akari","黑魔法师#FK12"],subs:["Terrell#morg"],emergency:null,coach:null,acoach:null},
+  {abbr:"VOLI",name:"Volitant",captain:"macroura#ankh",roster:["Nonoyes7844#TTV","twitch whimsyvlr#lava7","S7ATIX#1060","Bzee#liah","macroura#ankh"],subs:["GavinHall#Flint","KevinWinters#STL"],emergency:null,coach:"ben#00420",acoach:null},
+  {abbr:"WWS",name:"WhyWeSleeping",captain:"take my hand#zzz",roster:["Globe#washd","Ellep#777","巛w巛#onton","interlaced#wtp","take my hand#zzz"],subs:["mikester#wtp","m got motion#b4b"],emergency:"emote#2452",coach:null,acoach:null},
+  {abbr:"XE",name:"Xora Esports",captain:"Ch1pS#Jesus",roster:["Ch1pS#Jesus","Hasagi#Ugh","Freshie#IYA","BIG TONKA T#2006","XLG 生死有命富贵由天6767#ayble"],subs:["Truu#vlr"],emergency:null,coach:"Ruwaa#Caleb",acoach:null},
+  {abbr:"YT",name:"yung thug",captain:"Entri#Tammy",roster:["Shrony#444","tecsyrup#8654","Entri#Tammy","awfuh and me#xkrz","sʍʍ#222"],subs:["S2A#sheet"],emergency:"xzy2#一千年",coach:null,acoach:null},
+  {abbr:"ZOD",name:"Zodiac Esports",captain:"Knock27#2727",roster:["asura#PHL","greg#craig","Knock27#2727","Frostesz#Joey","Mob#oobie"],subs:["ICE AGE MONSTER#SID"],emergency:null,coach:"Gjorgji#bob",acoach:null}
+];
+
+let filtered = [...teams];
+
+function renderGrid() {
+  const grid = document.getElementById('grid');
+  document.getElementById('count').textContent = filtered.length;
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="no-results"><p>No teams found</p><span>Try a different search</span></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map((t,i) => {
+    const isShitlist = t.shitlist;
+    return `<div class="team-card" id="card-${i}" onclick="toggle(${i})">
+      <div class="card-header">
+        <div class="team-abbr${isShitlist?' shitlist':''}">${t.abbr}</div>
+        <div class="card-title-wrap">
+          <div class="team-name">${t.name}${isShitlist?'<span class="shitlist-badge">shitlist</span>':''}</div>
+          <div class="team-meta">5 players · ${t.coach?'coached':'no coach'}</div>
+        </div>
+        <button class="expand-btn" aria-label="Expand roster">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="roster-section">
+          <div class="roster-section-label">Roster</div>
+          <div class="players-list">
+            ${t.roster.map(p => {
+              const isCap = p === t.captain;
+              return `<div class="player-row${isCap?' captain-row':''}">
+                <div class="player-dot${isCap?' captain':''}"></div>
+                <div class="player-name${isCap?' captain':''}">${p}${isCap?'<span class="captain-star">★</span>':''}</div>
+              </div>`;
+            }).join('')}
+          </div>
+        </div>
+        ${t.subs && t.subs.length ? `<div class="divider"></div>
+        <div class="roster-section">
+          <div class="roster-section-label">Substitutes</div>
+          <div class="players-list">
+            ${t.subs.map(p=>`<div class="player-row sub-row"><div class="player-dot"></div><div class="player-name">${p}</div></div>`).join('')}
+          </div>
+        </div>` : ''}
+        ${t.emergency ? `<div class="roster-section" style="margin-top:8px">
+          <div class="roster-section-label">Emergency Sub</div>
+          <div class="player-row emerg-row"><div class="player-dot"></div><div class="player-name">${t.emergency}</div></div>
+        </div>` : ''}
+        <div class="divider"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px">
+          <div class="staff-row"><span class="staff-label">Coach</span><span class="${t.coach?'staff-name':'none-text'}">${t.coach||'None'}</span></div>
+          <div class="staff-row"><span class="staff-label">Asst.</span><span class="${t.acoach?'staff-name':'none-text'}">${t.acoach||'None'}</span></div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggle(i) {
+  const card = document.getElementById('card-'+i);
+  card.classList.toggle('expanded');
+}
+
+function applyFilters() {
+  const q = document.getElementById('search').value.toLowerCase();
+  const sort = document.getElementById('sort').value;
+  filtered = teams.filter(t => {
+    if (!q) return true;
+    return t.name.toLowerCase().includes(q) ||
+      t.abbr.toLowerCase().includes(q) ||
+      t.roster.some(p => p.toLowerCase().includes(q)) ||
+      (t.subs||[]).some(p => p.toLowerCase().includes(q));
+  });
+  filtered.sort((a,b) => sort === 'alpha-desc' ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name));
+  renderGrid();
+}
+
+document.getElementById('search').addEventListener('input', applyFilters);
+document.getElementById('sort').addEventListener('change', applyFilters);
+
+renderGrid();
+</script>
+</body>
+</html>
