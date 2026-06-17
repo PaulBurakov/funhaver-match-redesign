@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Match View — Funhaver.gg Redesign</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#0d0f14;color:#e8eaf0;min-height:100vh}
+.page{display:grid;grid-template-columns:260px 1fr 220px;min-height:100vh;font-size:13px}
+.sidebar{padding:20px 16px;border-right:0.5px solid rgba(255,255,255,0.08)}
+.sidebar-label{font-size:10px;letter-spacing:0.08em;color:#5a6070;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.team-card{background:#141720;border:0.5px solid rgba(255,255,255,0.07);border-radius:10px;padding:14px;margin-bottom:12px}
+.team-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.team-tag{font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;letter-spacing:0.05em}
+.eg-tag{background:rgba(87,171,255,0.15);color:#57abff}
+.ng-tag{background:rgba(100,220,140,0.15);color:#64dc8c}
+.team-name{font-size:13px;font-weight:600;color:#e8eaf0}
+.roster-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.roster-col-label{font-size:9px;color:#5a6070;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px}
+.player{font-size:11px;color:#9aa0b0;padding:2px 0}
+.main{padding:24px 28px;min-width:0}
+.match-meta{font-size:11px;color:#5a6070;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.match-meta .divider{width:1px;height:10px;background:rgba(255,255,255,0.12)}
+.scoreboard{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding:20px 24px;background:#141720;border:0.5px solid rgba(255,255,255,0.08);border-radius:12px}
+.team-side{display:flex;align-items:center;gap:12px}
+.team-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.eg-icon{background:rgba(87,171,255,0.18);color:#57abff}
+.ng-icon{background:rgba(100,220,140,0.18);color:#64dc8c}
+.team-full-name{font-size:16px;font-weight:700;color:#e8eaf0}
+.score-block{display:flex;align-items:center;gap:16px}
+.score-num{font-size:42px;font-weight:800;line-height:1}
+.score-loss{color:#3a3f50}
+.score-win{color:#64dc8c}
+.score-sep{font-size:28px;color:#2e3340;font-weight:300}
+.maps-label{font-size:11px;color:#5a6070;text-transform:uppercase;letter-spacing:0.07em;margin-bottom:12px}
+.map-card{background:#141720;border:0.5px solid rgba(255,255,255,0.07);border-radius:10px;margin-bottom:8px;overflow:hidden;display:grid;grid-template-columns:180px 1fr auto;align-items:center}
+.map-img-area{height:80px;position:relative;overflow:hidden}
+.map-bg-ascent{background:linear-gradient(135deg,#1a2230 0%,#0f1820 100%)}
+.map-bg-breeze{background:linear-gradient(135deg,#1a2818 0%,#0f1810 100%)}
+.map-bg-fracture{background:linear-gradient(135deg,#201820 0%,#120f14 100%)}
+.map-overlay{position:absolute;inset:0;padding:10px 12px;display:flex;flex-direction:column;justify-content:flex-end}
+.map-num{font-size:9px;color:rgba(255,255,255,0.4);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:2px}
+.map-name{font-size:13px;font-weight:700;color:#e8eaf0}
+.map-start{font-size:10px;color:#6a7080;margin-top:2px}
+.map-score-area{padding:0 20px}
+.map-score-text{font-size:15px;font-weight:700;color:#e8eaf0;text-align:center}
+.map-score-text .winner{color:#64dc8c}
+.map-score-text .loser{color:#5a6070}
+.map-actions{padding:0 16px;display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.winner-badge{font-size:9px;font-weight:600;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.06em;text-align:center;min-width:90px}
+.eg-badge{background:rgba(87,171,255,0.12);color:#57abff}
+.ng-badge{background:rgba(100,220,140,0.12);color:#64dc8c}
+.view-stats-btn{font-size:10px;color:#5a6070;background:none;border:none;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:3px;padding:0}
+.view-stats-btn:hover{color:#9aa0b0}
+.copy-btn{font-size:10px;color:#5a6070;background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);border-radius:4px;cursor:pointer;padding:4px 10px;font-family:inherit}
+.copy-btn:hover{background:rgba(255,255,255,0.08);color:#9aa0b0}
+.right-panel{padding:20px 14px;border-left:0.5px solid rgba(255,255,255,0.08)}
+.panel-section{margin-bottom:20px}
+.panel-section-label{font-size:10px;letter-spacing:0.08em;color:#5a6070;text-transform:uppercase;margin-bottom:10px}
+.lobby-input{background:#0d0f14;border:0.5px solid rgba(255,255,255,0.1);border-radius:6px;padding:7px 10px;font-size:11px;color:#5a6070;width:100%;font-family:inherit;margin-bottom:6px;outline:none}
+.lobby-hint{font-size:10px;color:#3a3f50}
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tool-btn{background:#141720;border:0.5px solid rgba(255,255,255,0.07);border-radius:7px;padding:9px 8px;cursor:pointer;font-size:10px;color:#9aa0b0;font-family:inherit;display:flex;align-items:center;gap:5px;transition:background 0.15s}
+.tool-btn:hover{background:#1c2030}
+.tool-btn i{font-size:13px;color:#5a6070}
+.tool-btn.danger{color:#e05555}
+.tool-btn.danger i{color:#e05555}
+.next-matchup-box{background:#141720;border:0.5px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;margin-bottom:10px}
+.nmb-label{font-size:10px;color:#5a6070;margin-bottom:4px}
+.nmb-val{font-size:12px;color:#9aa0b0}
+.view-bracket-btn{width:100%;background:rgba(87,171,255,0.08);border:0.5px solid rgba(87,171,255,0.25);border-radius:7px;padding:8px;font-size:11px;color:#57abff;font-family:inherit;cursor:pointer;font-weight:600;letter-spacing:0.03em;margin-bottom:20px}
+.view-bracket-btn:hover{background:rgba(87,171,255,0.14)}
+.chat-box{background:#141720;border:0.5px solid rgba(255,255,255,0.07);border-radius:8px;padding:12px;min-height:60px}
+.chat-empty{font-size:11px;color:#3a3f50;text-align:center;padding:10px 0}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="sidebar">
+    <div class="sidebar-label"><i class="ti ti-users"></i> Rosters</div>
+    <div class="team-card">
+      <div class="team-header">
+        <span class="team-tag eg-tag">EG</span>
+        <span class="team-name">Evil Geniuses Academy</span>
+      </div>
+      <div class="roster-cols">
+        <div>
+          <div class="roster-col-label">Riot ID</div>
+          <div class="player">EG Dark3st#light ★</div>
+          <div class="player">EG Recoil#tyty</div>
+          <div class="player">EG moobs#CAN</div>
+          <div class="player">EG bdog#2916</div>
+          <div class="player">EG big bean#jakee</div>
+        </div>
+        <div>
+          <div class="roster-col-label">Subs</div>
+          <div class="player">EG zerona#harpr</div>
+          <div class="player">tyranitar#wedid</div>
+          <div class="roster-col-label" style="margin-top:10px">Coaches</div>
+          <div class="player">EG Daeda#base</div>
+        </div>
+      </div>
+    </div>
+    <div class="team-card">
+      <div class="team-header">
+        <span class="team-tag ng-tag">NG</span>
+        <span class="team-name">Nightblood Gaming</span>
+      </div>
+      <div class="roster-cols">
+        <div>
+          <div class="roster-col-label">Riot ID</div>
+          <div class="player">sonofcar#11111 ★</div>
+          <div class="player">toozy#000</div>
+          <div class="player">zeek#777</div>
+          <div class="player">Stunna#2006</div>
+          <div class="player">stellar#bden</div>
+        </div>
+        <div>
+          <div class="roster-col-label">Subs</div>
+          <div class="player">igneous rock fan#rock</div>
+          <div class="roster-col-label" style="margin-top:10px">Coaches</div>
+          <div class="player">MonSi #3505</div>
+          <div class="player">practo#SL1</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="match-meta">
+      <span>Grand Final</span>
+      <span class="divider"></span>
+      <span>Best of 3</span>
+      <span class="divider"></span>
+      <span>Wild West Stage 2-6 · Playoffs</span>
+    </div>
+    <div class="scoreboard">
+      <div class="team-side">
+        <div class="team-icon eg-icon">EG</div>
+        <div>
+          <div class="team-full-name">Evil Geniuses Academy</div>
+          <div style="font-size:10px;color:#5a6070;margin-top:2px">1 map win</div>
+        </div>
+      </div>
+      <div class="score-block">
+        <span class="score-num score-loss">1</span>
+        <span class="score-sep">|</span>
+        <span class="score-num score-win">2</span>
+      </div>
+      <div class="team-side" style="flex-direction:row-reverse">
+        <div class="team-icon ng-icon">NG</div>
+        <div style="text-align:right">
+          <div class="team-full-name" style="color:#64dc8c">Nightblood Gaming 👑</div>
+          <div style="font-size:10px;color:#5a6070;margin-top:2px">Series winner · 2 map wins</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="maps-label">Map Scores</div>
+
+    <div class="map-card">
+      <div class="map-img-area map-bg-ascent">
+        <div class="map-overlay">
+          <div class="map-num">Map 1</div>
+          <div class="map-name">Ascent</div>
+          <div class="map-start">NG starts Defense</div>
+        </div>
+      </div>
+      <div class="map-score-area">
+        <div style="font-size:10px;color:#5a6070;text-align:center;margin-bottom:4px">Final score</div>
+        <div class="map-score-text">EG <span class="loser">9</span> — <span class="winner">13</span> NG</div>
+      </div>
+      <div class="map-actions">
+        <span class="winner-badge ng-badge">Nightblood Gaming</span>
+        <button class="view-stats-btn"><i class="ti ti-chart-bar" style="font-size:11px"></i> View Stats</button>
+        <button class="copy-btn"><i class="ti ti-copy" style="font-size:10px"></i> Copy ID</button>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <div class="map-img-area map-bg-breeze">
+        <div class="map-overlay">
+          <div class="map-num">Map 2</div>
+          <div class="map-name">Breeze</div>
+          <div class="map-start">EG starts Defense</div>
+        </div>
+      </div>
+      <div class="map-score-area">
+        <div style="font-size:10px;color:#5a6070;text-align:center;margin-bottom:4px">Final score</div>
+        <div class="map-score-text"><span class="winner">EG 13</span> — <span class="loser">10</span> NG</div>
+      </div>
+      <div class="map-actions">
+        <span class="winner-badge eg-badge">Evil Geniuses Academy</span>
+        <button class="view-stats-btn"><i class="ti ti-chart-bar" style="font-size:11px"></i> View Stats</button>
+        <button class="copy-btn"><i class="ti ti-copy" style="font-size:10px"></i> Copy ID</button>
+      </div>
+    </div>
+
+    <div class="map-card">
+      <div class="map-img-area map-bg-fracture">
+        <div class="map-overlay">
+          <div class="map-num">Map 3</div>
+          <div class="map-name">Fracture</div>
+          <div class="map-start">EG starts Attack</div>
+        </div>
+      </div>
+      <div class="map-score-area">
+        <div style="font-size:10px;color:#5a6070;text-align:center;margin-bottom:4px">Final score</div>
+        <div class="map-score-text">EG <span class="loser">8</span> — <span class="winner">13</span> NG</div>
+      </div>
+      <div class="map-actions">
+        <span class="winner-badge ng-badge">Nightblood Gaming</span>
+        <button class="view-stats-btn"><i class="ti ti-chart-bar" style="font-size:11px"></i> View Stats</button>
+        <button class="copy-btn"><i class="ti ti-copy" style="font-size:10px"></i> Copy ID</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="panel-section">
+      <div class="panel-section-label">Next Matchup</div>
+      <div class="next-matchup-box">
+        <div class="nmb-label">Status</div>
+        <div class="nmb-val">No remaining matches</div>
+      </div>
+      <button class="view-bracket-btn"><i class="ti ti-tournament" style="font-size:13px;vertical-align:-2px;margin-right:4px"></i> View Bracket</button>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Lobby Code</div>
+      <input class="lobby-input" placeholder="VALORANT lobby code" readonly />
+      <div class="lobby-hint">No lobby code saved.</div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Tools</div>
+      <div class="tools-grid">
+        <button class="tool-btn"><i class="ti ti-alert-triangle"></i> Report Tech</button>
+        <button class="tool-btn"><i class="ti ti-bell"></i> Ping Team</button>
+        <button class="tool-btn"><i class="ti ti-shield"></i> Ping Admin</button>
+        <button class="tool-btn"><i class="ti ti-edit"></i> Update Score</button>
+        <button class="tool-btn danger"><i class="ti ti-rotate-clockwise"></i> Reset Veto</button>
+        <button class="tool-btn danger"><i class="ti ti-rotate-clockwise"></i> Reset Match</button>
+      </div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-section-label">Match Chat <span style="color:#3a3f50;font-size:9px;font-weight:400;text-transform:none;letter-spacing:0">· Closed after match</span></div>
+      <div class="chat-box">
+        <div class="chat-empty">No messages yet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
