@@ -206,6 +206,7 @@ footer a{color:var(--muted);text-decoration:none}
     <option value="seed">Seed ↑</option>
     <option value="seed-desc">Seed ↓</option>
     <option value="record">Record ↑</option>
+    <option value="record-desc">Record ↓</option>
   </select>
   <div class="filter-chips">
     <button class="chip" id="chip-coached" onclick="toggleChip('coached')">Has Coach</button>
@@ -513,6 +514,7 @@ function applyFilters(){
   else if(sort==='seed') filtered.sort((a,b)=>(seeds[a.name]||999)-(seeds[b.name]||999));
   else if(sort==='seed-desc') filtered.sort((a,b)=>(seeds[b.name]||999)-(seeds[a.name]||999));
   else if(sort==='record') filtered.sort((a,b)=>getW(b)-getW(a));
+  else if(sort==='record-desc') filtered.sort((a,b)=>getW(a)-getW(b));
   else filtered.sort((a,b)=>a.name.localeCompare(b.name));
   renderGrid();
 }
