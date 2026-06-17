@@ -200,13 +200,6 @@ footer a{color:var(--muted);text-decoration:none}
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" id="search" placeholder="Search teams, players, coaches...">
   </div>
-  <div class="filter-chips">
-    <button class="chip" id="chip-coached" onclick="toggleChip('coached')">Has Coach</button>
-    <button class="chip" id="chip-uncoached" onclick="toggleChip('uncoached')">No Coach</button>
-    <button class="chip red-chip" id="chip-shitlist" onclick="toggleChip('shitlist')">Shitlist</button>
-    <button class="chip" id="chip-playoffs" onclick="toggleChip('playoffs')">Made Playoffs</button>
-  </div>
-  <span class="sort-label" style="margin-left:auto">Sort:</span>
   <select class="sort-select" id="sort">
     <option value="alpha">Name A–Z</option>
     <option value="alpha-desc">Name Z–A</option>
@@ -214,7 +207,13 @@ footer a{color:var(--muted);text-decoration:none}
     <option value="seed-desc">Seed ↓</option>
     <option value="record">Record ↑</option>
   </select>
-  <div class="team-count">Showing <span id="count">52</span> teams</div>
+  <div class="filter-chips">
+    <button class="chip" id="chip-coached" onclick="toggleChip('coached')">Has Coach</button>
+    <button class="chip" id="chip-uncoached" onclick="toggleChip('uncoached')">No Coach</button>
+    <button class="chip red-chip" id="chip-shitlist" onclick="toggleChip('shitlist')">Shitlist</button>
+    <button class="chip" id="chip-playoffs" onclick="toggleChip('playoffs')">Made Playoffs</button>
+  </div>
+  <div class="team-count" style="margin-left:auto">Showing <span id="count">52</span> teams</div>
 </div>
 
 <div class="grid" id="grid"></div>
