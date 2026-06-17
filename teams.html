@@ -136,6 +136,21 @@ footer a:hover{color:var(--cyan)}
 </footer>
 
 <script>
+const seeds = {
+  'apples':1,'Berzerkers':2,'Lean is Law':4,'Anywhere But Here':3,
+  'Evictix':1,'WhyWeSleeping':2,'yung thug':3,'Seraph':4,
+  'Jackpot':1,'Eternal Focus Night':2,'tadpoles':3,'Oklahoma':4,
+  '4kt':2,'Division One':1,'Koala university':3,'Miracle Makers':4,
+  'really good players':1,'Clovers':2,'HEAVY hittas':3,'mute up':4,
+  'Nightblood Gaming':1,'QoR Piggies':2,'tangerines':3,'Volitant':4,
+  'Blue Otter':1,'Alliance Guardians':2,'ROSO':3,'Pug Warriors':4,
+  'Dynamo':1,'Tempers':2,'Flying Hippos':3,'ROSO GC':4,
+  'Evil Geniuses Academy':1,'Eternal Focus':2,'HEHEHEHA':3,'NOT winning':4,
+  'barbeque chicken':1,'Curry and Friends':4,'Celestial Esports':3,'The Ellars':2,
+  'inters':1,'Country Roads':2,'Ares2 Legion':3,'GREY':4,
+  'ROSE':2,'Xora Esports':1,'Zodiac Esports':3,'ADHD AIMERS':4,
+  'NXG':1,'focused on gaming':2,'Omnipotent Gaming':3,'Ice Fishers':4
+};
 const teams = [
   {abbr:"4K",name:"4kt",captain:"dmo#derek",roster:["snow#2574","dmo#derek","lIIlIlIIllIllIII#99999","johnny cox#6080","crosbycs#fps"],subs:["River#347"],emergency:"sen oasis#vvv",coach:null,acoach:null},
   {abbr:"AA",name:"ADHD AIMERS",captain:"STOP THE VOICES#NOOOO",roster:["STOP THE VOICES#NOOOO","zzz#asp","alii#bae","Zydro#6789","Wast3d#esper"],subs:["nemophila#nami","GEESE SUPER FAN#nalyD"],emergency:null,coach:null,acoach:null},
@@ -207,7 +222,7 @@ function renderGrid() {
         <div class="team-abbr${isShitlist?' shitlist':''}">${t.abbr}</div>
         <div class="card-title-wrap">
           <div class="team-name">${t.name}${isShitlist?'<span class="shitlist-badge">shitlist</span>':''}</div>
-          <div class="team-meta">5 players · ${t.subs&&t.subs.length?t.subs.length+' sub'+(t.subs.length>1?'s':''):' no subs'} · ${t.coach?'coached':'no coach'}</div>
+          <div class="team-meta">${seeds[t.name] ? 'Seed #'+seeds[t.name]+' · ' : ''}5 players · ${t.subs&&t.subs.length?t.subs.length+' sub'+(t.subs.length>1?'s':''):' no subs'} · ${t.coach?'coached':'no coach'}</div>
         </div>
         <button class="expand-btn" aria-label="Expand roster">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
