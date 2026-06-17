@@ -50,12 +50,12 @@ nav{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);
 .team-count span{color:var(--cyan);font-weight:600}
 
 /* GRID */
-.grid{columns:280px;column-gap:12px;padding:0 32px 48px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;padding:0 32px 48px;align-items:start}
 
 /* TEAM CARD */
-.team-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color 0.15s;cursor:pointer;break-inside:avoid;margin-bottom:12px;display:block}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color 0.15s;cursor:pointer}
 .team-card:hover{border-color:var(--cyan-border);transform:translateY(-2px)}
-.team-card.expanded .card-body{max-height:600px;padding:0 16px 14px;border-top:1px solid var(--border)}
+.team-card.collapsed .card-body{display:none}
 .card-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
 .team-abbr{width:38px;height:38px;border-radius:7px;background:var(--cyan-dim);border:1px solid var(--cyan-border);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:800;color:var(--cyan);letter-spacing:0.05em;flex-shrink:0}
 .team-abbr.shitlist{background:rgba(255,80,80,0.1);border-color:rgba(255,80,80,0.25);color:#ff5050}
@@ -66,9 +66,9 @@ nav{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);
 .expand-btn{background:none;border:none;color:var(--muted);cursor:pointer;padding:4px;display:flex;align-items:center;justify-content:center;border-radius:4px;transition:color 0.15s,background 0.15s}
 .expand-btn:hover{color:var(--text);background:var(--surface2)}
 .expand-btn svg{width:16px;height:16px;transition:transform 0.2s}
-.team-card.expanded .expand-btn svg{transform:rotate(180deg)}
+.team-card.collapsed .expand-btn svg{transform:rotate(-90deg)}
 
-.card-body{max-height:0;overflow:hidden;padding:0 16px;border-top:0px solid var(--border);transition:max-height 0.25s ease,padding 0.2s ease,border-top 0.2s ease}
+.card-body{overflow:hidden;padding:0 16px 14px;border-top:1px solid var(--border)}
 .roster-section{margin-top:12px}
 .roster-section-label{font-size:9px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
 .players-list{display:flex;flex-direction:column;gap:3px}
@@ -248,11 +248,8 @@ function renderGrid() {
 }
 
 function toggle(i) {
-  const cards = document.querySelectorAll('.team-card');
   const target = document.getElementById('card-'+i);
-  const isOpen = target.classList.contains('expanded');
-  cards.forEach(c => c.classList.remove('expanded'));
-  if (!isOpen) target.classList.add('expanded');
+  target.classList.toggle('collapsed');
 }
 
 function applyFilters() {
