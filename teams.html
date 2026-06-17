@@ -124,6 +124,8 @@ footer a:hover{color:var(--cyan)}
   <select class="sort-select" id="sort">
     <option value="alpha">Team Name A–Z</option>
     <option value="alpha-desc">Team Name Z–A</option>
+    <option value="seed">Seed (Low to High)</option>
+    <option value="seed-desc">Seed (High to Low)</option>
   </select>
   <div class="team-count">Showing <span id="count">52</span> teams</div>
 </div>
@@ -137,19 +139,17 @@ footer a:hover{color:var(--cyan)}
 
 <script>
 const seeds = {
-  'apples':1,'Berzerkers':2,'Lean is Law':4,'Anywhere But Here':3,
-  'Evictix':1,'WhyWeSleeping':2,'yung thug':3,'Seraph':4,
-  'Jackpot':1,'Eternal Focus Night':2,'tadpoles':3,'Oklahoma':4,
-  '4kt':2,'Division One':1,'Koala university':3,'Miracle Makers':4,
-  'really good players':1,'Clovers':2,'HEAVY hittas':3,'mute up':4,
-  'Nightblood Gaming':1,'QoR Piggies':2,'tangerines':3,'Volitant':4,
-  'Blue Otter':1,'Alliance Guardians':2,'ROSO':3,'Pug Warriors':4,
-  'Dynamo':1,'Tempers':2,'Flying Hippos':3,'ROSO GC':4,
-  'Evil Geniuses Academy':1,'Eternal Focus':2,'HEHEHEHA':3,'NOT winning':4,
-  'barbeque chicken':1,'Curry and Friends':4,'Celestial Esports':3,'The Ellars':2,
-  'inters':1,'Country Roads':2,'Ares2 Legion':3,'GREY':4,
-  'ROSE':2,'Xora Esports':1,'Zodiac Esports':3,'ADHD AIMERS':4,
-  'NXG':1,'focused on gaming':2,'Omnipotent Gaming':3,'Ice Fishers':4
+  '4kt':23,'ADHD AIMERS':41,'Alliance Guardians':20,'Anywhere But Here':27,'apples':1,
+  'Ares2 Legion':37,'barbeque chicken':10,'Berzerkers':26,'Blue Otter':7,'Celestial Esports':36,
+  'Clovers':22,'Country Roads':16,'Curry and Friends':43,'Division One':4,'Dynamo':8,
+  'Eternal Focus':18,'Eternal Focus Night':17,'Evictix':2,'Evil Geniuses Academy':9,
+  'Flying Hippos':40,'focused on gaming':15,'GREY':32,'HEAVY hittas':39,'HEHEHEHA':35,
+  'Ice Fishers':33,'inters':11,'Jackpot':3,'Koala university':34,'Lean is Law':44,
+  'Miracle Makers':46,'mute up':48,'Nightblood Gaming':6,'NOT winning':52,'NXG':13,
+  'Oklahoma':50,'Omnipotent Gaming':28,'Pug Warriors':51,'QoR Piggies':21,
+  'really good players':5,'ROSE':15,'ROSO':49,'ROSO GC':47,'Seraph':42,
+  'tadpoles':29,'tangerines':38,'Tempers':19,'The Ellars':14,'Volitant':30,
+  'WhyWeSleeping':25,'Xora Esports':12,'yung thug':31,'Zodiac Esports':24
 };
 const teams = [
   {abbr:"4K",name:"4kt",captain:"dmo#derek",roster:["snow#2574","dmo#derek","lIIlIlIIllIllIII#99999","johnny cox#6080","crosbycs#fps"],subs:["River#347"],emergency:"sen oasis#vvv",coach:null,acoach:null},
@@ -222,9 +222,9 @@ function renderGrid() {
         <div class="team-abbr${isShitlist?' shitlist':''}">${t.abbr}</div>
         <div class="card-title-wrap">
           <div class="team-name">${t.name}${isShitlist?'<span class="shitlist-badge">shitlist</span>':''}</div>
-          <div class="team-meta">${seeds[t.name] ? 'Seed #'+seeds[t.name]+' · ' : ''}5 players · ${t.subs&&t.subs.length?t.subs.length+' sub'+(t.subs.length>1?'s':''):' no subs'} · ${t.coach?'coached':'no coach'}</div>
+          <div class="team-meta">5 players · ${t.subs&&t.subs.length?t.subs.length+' sub'+(t.subs.length>1?'s':''):' no subs'} · ${t.coach?'coached':'no coach'}</div>
         </div>
-        <button class="expand-btn" aria-label="Expand roster">
+        <span style="font-size:12px;color:var(--muted);margin-right:4px">${seeds[t.name] ? '('+seeds[t.name]+')' : ''}</span><button class="expand-btn" aria-label="Expand roster">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
       </div>
@@ -277,7 +277,10 @@ function applyFilters() {
       t.roster.some(p => p.toLowerCase().includes(q)) ||
       (t.subs||[]).some(p => p.toLowerCase().includes(q));
   });
-  filtered.sort((a,b) => sort === 'alpha-desc' ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name));
+  if (sort === 'alpha-desc') filtered.sort((a,b) => b.name.localeCompare(a.name));
+  else if (sort === 'seed') filtered.sort((a,b) => (seeds[a.name]||99) - (seeds[b.name]||99));
+  else if (sort === 'seed-desc') filtered.sort((a,b) => (seeds[b.name]||99) - (seeds[a.name]||99));
+  else filtered.sort((a,b) => a.name.localeCompare(b.name));
   renderGrid();
 }
 
