@@ -50,10 +50,10 @@ nav{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--border);
 .team-count span{color:var(--cyan);font-weight:600}
 
 /* GRID */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;padding:0 32px 48px;align-items:start}
+.grid{columns:280px;column-gap:12px;padding:0 32px 48px}
 
 /* TEAM CARD */
-.team-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color 0.15s,transform 0.15s;cursor:pointer}
+.team-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;transition:border-color 0.15s;cursor:pointer;break-inside:avoid;margin-bottom:12px;display:block}
 .team-card:hover{border-color:var(--cyan-border);transform:translateY(-2px)}
 .team-card.expanded .card-body{max-height:600px;padding:0 16px 14px;border-top:1px solid var(--border)}
 .card-header{padding:14px 16px;display:flex;align-items:center;gap:12px}
